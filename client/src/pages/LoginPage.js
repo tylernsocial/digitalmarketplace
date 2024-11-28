@@ -3,7 +3,7 @@ import "./LoginPage.css";
 
 export const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  // Dont worry now
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({
@@ -11,29 +11,38 @@ export const LoginPage = () => {
       [name]: value,
     });
   };
-  // Dont worry now
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:8800/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify(credentials), // Send login credentials to backend
       });
+
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json(); // Parse the successful response
         alert(`Welcome back, ${data.name || "User"}!`);
+        // Optionally redirect to a dashboard or another page
+        // navigate('/dashboard');
       } else {
-        alert("Invalid email or password. Please try again.");
+        const errorData = await response.json(); // Extract error details from backend response
+        alert(`Error: ${errorData.message || "Invalid email or password."}`);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again later.");
+      console.error("Error:", error); // Log the full error object for debugging
+      alert(
+        `Error: ${
+          error.message ||
+          "An unknown error occurred. Please check the console for more details."
+        }`
+      );
     }
   };
-  // Dont worry now
+
   return (
     <div className="login-page">
       <h1>Login</h1>

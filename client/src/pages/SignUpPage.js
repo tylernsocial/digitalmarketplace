@@ -11,7 +11,7 @@ export const SignUpPage = () => {
     phone: "",
     role: "buyer",
   });
-  // Dont worry now
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -19,28 +19,33 @@ export const SignUpPage = () => {
       [name]: value,
     });
   };
-  // Dont worry now
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        alert("Sign-up successful!");
-      } else {
-        alert("Error signing up. Please try again.");
-      }
+        const response = await fetch("http://localhost:8800/api/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData), // Send form data to backend
+        });
+
+        if (response.ok) {
+            alert("Sign-up successful!");
+            // Optionally redirect to login page
+            // navigate('/login');
+        } else {
+            const errorData = await response.json(); // Extract error details from backend response
+            alert(`Error: ${errorData.message || "Sign-up failed. Please try again."}`);
+        }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred. Please try again later.");
+        console.error("Error:", error); // Log the full error object for debugging
+        alert(`Error: ${error.message || "An unknown error occurred. Please check the console for more details."}`);
     }
-  };
-  // Dont worry now
+};
+
+
   return (
     <div className="signup-page">
       <h1>Sign Up</h1>
