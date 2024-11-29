@@ -1,0 +1,45 @@
+.sellerpage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #c5e1ff;
+    text-align: center;
+  }
+
+  .sellerpage-title {
+    font-size: 1.5rem;  /* Adjust as needed */
+    color: #5e7894;
+    position: absolute; /* Use absolute positioning */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    margin: 0; /* Remove margins to avoid unintended space */
+    padding: 1rem; /* Optional, if you want some padding around the title */
+}
+
+.sellerpage-search {
+    width: 1000px;
+    height: 40px;
+    position: absolute;
+    left: 20px;
+    top: 60px;
+    background-color: #8fa6c0;
+    border-radius: 20px;  /* Make the container rounded */
+    display: flex;
+    align-items: center;
+    padding: 0 10px;  /* Add some padding */
+    border:#355e8a;
+}
+
+.sellerpage-search input {
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 15px;  /* Make the input field rounded */
+    padding: 5px 15px;  /* Add padding for the input field */
+    font-size: 1rem;
+    outline: none;  /* Remove outline on focus */
+    background-color: #8fa6c0;
+}
+
