@@ -43,7 +43,13 @@ app.post("/api/login", (req, res) => {
     db.query(q, [email, password], (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length === 0) return res.status(401).json("Invalid email or password");
-        return res.status(200).json({ name: data[0].fname });
+       
+        const user = {
+            name: data[0].fname,
+            role: data[0].role, // Include role in the response
+        };
+
+        return res.status(200).json({ name: data[0].fname, role:data[0].role});
     });
 });
 app.get("/test-db", (req, res) => {
