@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './SellerHomePage.css'; 
+import axios from "axios";
 
 export const SellerHomePage = () => {
+
+        const [item, setItem] = useState([])
+        useEffect(() => {
+          const fetchAllItem = async () =>{
+            try{
+              const res = await axios.get("http://localhost:8800/item")
+              setItem(res.data)
+            }catch(err){
+              console.log(err)
+            }
+          }
+          fetchAllItem()
+        },[])
+
         // State to manage search query
         const [searchQuery, setSearchQuery] = useState("");
   
@@ -29,6 +44,15 @@ export const SellerHomePage = () => {
             placeholder="Search..."
           />
         </form>
+        <div className ="item">
+          {item.map(item_single =>(
+            <div className ="item_single" key={item_single.id}>
+              {item_single.item_photo && <img src={item_single.item_photo} alt="" />}
+              <h2>{item_single.item_name}</h2>
+              <p>{item_single.item_condition}</p>
+            </div>
+          ))}
+        </div>
       </div>
         
     

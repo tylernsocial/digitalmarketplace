@@ -1,3 +1,4 @@
+
 .sellerpage-container {
     display: flex;
     flex-direction: column;
@@ -42,4 +43,3 @@
     outline: none;  /* Remove outline on focus */
     background-color: #8fa6c0;
 }
-

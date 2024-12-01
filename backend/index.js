@@ -26,6 +26,39 @@ app.get("/member", (req, res)=>{
     })
 })
 
+// Get all items
+app.get("/item", (req, res)=>{
+    const q = "SELECT * FROM item"
+    db.query(q, (err,data)=>{
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.post("/api/item", (req, res) => {
+    const q = `
+        INSERT INTO item 
+        (item_name, item_condition, size, description, price, item_photo, member_id) 
+        VALUES (?)`;
+
+    const values = [
+        req.body.item_name,
+        req.body.item_condition,
+        req.body.size,
+        req.body.description,
+        req.body.price,
+        req.body.item_photo,
+        req.body.member_id // Attach the logged-in user's member_id
+    ];
+
+    db.query(q, [values], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Item has been created");
+    });
+});
+;     
+
+
 // Sign-up Endpoint
 app.post("/api/signup", (req, res) => {
     const { fname, lname, address, email, password, phone, role } = req.body;
@@ -45,6 +78,7 @@ app.post("/api/login", (req, res) => {
         if (data.length === 0) return res.status(401).json("Invalid email or password");
        
         const user = {
+            member_id: data[0].member_id, // Ensure member_id is included
             name: data[0].fname,
             role: data[0].role, // Include role in the response
         };
