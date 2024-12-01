@@ -43,3 +43,25 @@
     outline: none;  /* Remove outline on focus */
     background-color: #8fa6c0;
 }
+
+.sellerpage-left {
+    flex: 3;
+    padding: 20px;
+    width: 50%;
+    height: 70%;
+    position: absolute;
+    border-radius: 20px;  /* Make the container rounded */
+    display: flex;
+    left: 10px;
+    margin-top: 50px;
+    background-color: #355e8a;
+}
+
+.item-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-rows:repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    border-radius: 20px;
+    background-color: #bdbdbd;
+}
