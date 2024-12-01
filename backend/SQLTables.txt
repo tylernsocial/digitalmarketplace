@@ -8,3 +8,14 @@ CREATE TABLE users (
   phone VARCHAR(15),
   role ENUM('buyer', 'seller')
 );
+
+CREATE TABLE `resellstore`.`item` (
+  `item_id` INT NOT NULL PRIMARY KEY,
+  `item_name` VARCHAR(50),
+  `item_condition` VARCHAR(50),
+  `size` VARCHAR(20),
+  `description` VARCHAR(500),
+  `price` DECIMAL(10, 2),
+  `member_id` INT,
+  FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
+);
