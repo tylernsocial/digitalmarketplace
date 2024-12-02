@@ -18,6 +18,7 @@ app.get("/", (req,res)=>{
     res.json("Hello this is the backend")
 })
 
+// Get all members
 app.get("/member", (req, res)=>{
     const q = "SELECT * FROM member"
     db.query(q, (err,data)=>{

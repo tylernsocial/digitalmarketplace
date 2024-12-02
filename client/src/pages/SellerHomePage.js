@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const SellerHomePage = () => {
         const memberId = localStorage.getItem("id");
+        const memberName = localStorage.getItem("name");
 
         const navigate = useNavigate()
 
@@ -75,7 +76,7 @@ export const SellerHomePage = () => {
   return (
     // Seller title
     <div className="sellerpage-container">
-      <h1 className="sellerpage-title">Welcome to the Seller's portal!</h1>
+      <h1 className="sellerpage-title">Welcome to the Seller's portal, {memberName}!</h1>
     {/*Seller Search*/}
       <div className="sellerpage-search">
         <form onSubmit={handleSearch} style={{ width: "100%" }}>
