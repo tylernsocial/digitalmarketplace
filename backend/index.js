@@ -26,38 +26,54 @@ app.get("/member", (req, res)=>{
     })
 })
 
+// Get items based on member
+app.get("/items/member", (req, res)=>{
+    const memberId = req.query.member_id;
+    const q = "SELECT * FROM items WHERE member_id = ?";
+    db.query(q, [memberId], (err,data)=>{
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 // Get all items
-app.get("/item", (req, res)=>{
-    const q = "SELECT * FROM item"
+app.get("/items", (req, res)=>{
+    const q = "SELECT * FROM items"
     db.query(q, (err,data)=>{
         if (err) return res.json(err);
         return res.json(data);
     });
 });
 
-app.post("/api/item", (req, res) => {
+app.post("/items", (req, res) => {
+    const { item_name, item_condition, size, description, price, item_photo, member_id } = req.body;
+  
+    // Validate that member_id is included
+    if (!member_id) {
+      return res.status(400).json({ message: "Member ID is required." });
+    }
+  
     const q = `
-        INSERT INTO item 
-        (item_name, item_condition, size, description, price, item_photo, member_id) 
-        VALUES (?)`;
-
+      INSERT INTO items 
+      (item_name, item_condition, size, description, price, item_photo, member_id) 
+      VALUES (?)`;
+  
     const values = [
-        req.body.item_name,
-        req.body.item_condition,
-        req.body.size,
-        req.body.description,
-        req.body.price,
-        req.body.item_photo,
-        req.body.member_id // Attach the logged-in user's member_id
+      item_name,
+      item_condition,
+      size,
+      description,
+      price,
+      item_photo,
+      member_id, // member_id is passed here
     ];
-
+  
     db.query(q, [values], (err, data) => {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json("Item has been created");
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Item has been created");
     });
-});
-;     
-
+  });
+  
 
 // Sign-up Endpoint
 app.post("/api/signup", (req, res) => {
@@ -78,12 +94,12 @@ app.post("/api/login", (req, res) => {
         if (data.length === 0) return res.status(401).json("Invalid email or password");
        
         const user = {
-            member_id: data[0].member_id, // Ensure member_id is included
+            member_id: data[0].id, // Ensure member_id is included
             name: data[0].fname,
             role: data[0].role, // Include role in the response
         };
-
-        return res.status(200).json({ name: data[0].fname, role:data[0].role});
+        console.log(data); // Check what data is coming from the DB
+        return res.status(200).json({ member_id: data[0].id, name: data[0].fname, role:data[0].role});
     });
 });
 app.get("/test-db", (req, res) => {

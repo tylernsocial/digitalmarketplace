@@ -45,23 +45,150 @@
 }
 
 .sellerpage-left {
-    flex: 3;
+    display: flex;
+    position: absolute;
     padding: 20px;
     width: 50%;
     height: 70%;
-    position: absolute;
     border-radius: 20px;  /* Make the container rounded */
     display: flex;
-    left: 10px;
-    margin-top: 50px;
-    background-color: #355e8a;
+    left: 20px;
+    margin-top: 60px;
+    background-color: #5e7894;
+    overflow: scroll;
 }
 
-.item-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    grid-template-rows:repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    border-radius: 20px;
-    background-color: #bdbdbd;
+    .item-single {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+.sellerpage-right {
+    display: flex;
+    position: absolute;
+    padding: 20px;
+    width: 40%;
+    margin-top: 50px;
+    height: 70%;
+    right: 20px;
+    border-radius: 20px;  /* Make the container rounded */
+    background-color: #5e7894;
+}
+
+
+.item-single img {
+    max-width: 50%;
+    max-height: 50%;
+    object-fit: scale-down;
+    border-radius: 5px;
+  }
+  
+.item-grid {
+  display: flex; /* Change to flexbox for row flow */
+  flex-wrap: wrap; /* Allow items to wrap onto the next row */
+  gap: 20px; /* Add space between items */
+  justify-content: flex-start; /* Align items to the left */
+  align-content: flex-start; /* Ensure items stay at the top */
+  margin-top: 10px;
+  padding: 10px;
+  width: calc(100% - 40px); /* Adjust based on your layout */
+}
+
+
+.item-single h2, .item-single p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: #000000;
+}
+
+.item_single h2 {
+    font-weight: bold;
+}
+
+.item-details-inline {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    gap: 10px; /* Adjust the spacing between price and size */
+    align-items: center; /* Align items vertically */
+    font-size: 0.9rem; /* Adjust font size */
+    color: #555;
+  }
+  
+  .item-details-inline p {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+  }
+
+  /*Adding Items*/
+.add-item-title{
+    font-size: 1.5rem;  /* Adjust as needed */
+    color: #ffffff;
+    position: absolute; /* Use absolute positioning */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    margin: 0; /* Remove margins to avoid unintended space */
+    padding: 1rem; /* Optional, if you want some padding around the title */
+}
+
+
+/* Form Container Styling */
+.add-item-form {
+    padding: 2rem; /* Add padding around form */
+    background-color: #d2ecff; /* Light background color for form */
+    border-radius: 8px; /* Rounded corners */
+    margin-top: 40px; /* To give space between the title and form */
+    width: 100%;
+}
+
+/* Form Section Styling */
+.form-section {
+    margin-bottom: 2rem; /* Space between sections */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section Title Styling */
+.section-title {
+    font-size: 1.25rem; /* Adjust font size for section titles */
+    font-weight: bold; /* Bold text for section titles */
+    color: #333; /* Dark text for readability */
+    margin-bottom: 0.5rem; /* Space below the section title */
+    text-align: left;
+}
+
+/* Input Field for Item Name */
+.item-name-input {
+    width: 100%; /* Full width */
+    padding: 0.8rem; /* Padding for input */
+    margin-bottom: 1rem; /* Space below the input */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Font size for input */
+    box-sizing: border-box; /* Ensures padding and border are inside the width */
+}
+
+/* Radio Button Container */
+.item-condition, .size-options {
+    margin-top: 1.5rem; /* Space above the condition options */
+}
+
+/* Styling for Radio Button Labels */
+.radio-label {
+    display: block; /* Make labels block-level to stack them */
+    font-size: 1rem; /* Adjust font size */
+    margin-bottom: 1rem; /* Space below each label */
+    color: #333; /* Dark text for readability */
+}
+
+.item-condition input[type="radio"], .size-options input[type="radio"] {
+    margin-right: 0.5rem; /* Space between radio button and label text */
+    vertical-align: left; /* Align radio button with text */
 }

@@ -9,7 +9,7 @@ CREATE TABLE users (
   role ENUM('buyer', 'seller')
 );
 
-CREATE TABLE `resellstore`.`item` (
+CREATE TABLE `resellstore`.`items` (
   `item_id` INT NOT NULL PRIMARY KEY,
   `item_name` VARCHAR(50),
   `item_condition` VARCHAR(50),

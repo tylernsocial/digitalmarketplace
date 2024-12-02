@@ -28,7 +28,7 @@ export const LoginPage = () => {
 
       if (response.ok) {
         const data = await response.json(); // Parse the successful response
-        localStorage.setItem("member_id", data.member_id);
+        localStorage.setItem("id", data.member_id); // Store member_id
         alert(`Welcome back, ${data.name || "User"}!`);
         // Optionally redirect to a dashboard or another page
         // navigate('/dashboard');
