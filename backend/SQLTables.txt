@@ -1,5 +1,10 @@
-CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+DROP DATABASE IF EXISTS resellStore;
+CREATE DATABASE resellStore;
+
+USE resellStore;
+
+CREATE TABLE member (
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   fname VARCHAR(50),
   lname VARCHAR(50),
   address TEXT,
@@ -9,13 +14,22 @@ CREATE TABLE users (
   role ENUM('buyer', 'seller')
 );
 
-CREATE TABLE `resellstore`.`items` (
-  `item_id` INT NOT NULL PRIMARY KEY,
-  `item_name` VARCHAR(50),
-  `item_condition` VARCHAR(50),
-  `size` VARCHAR(20),
-  `description` VARCHAR(500),
-  `price` DECIMAL(10, 2),
-  `member_id` INT,
-  FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    total_cost DECIMAL(10, 2),
+    order_status VARCHAR(30),
+    member_id INT,
+    FOREIGN KEY (member_id) REFERENCES member(id)
+);
+
+CREATE TABLE items (
+  item_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  item_name VARCHAR(50),
+  item_condition VARCHAR(50),
+  size VARCHAR(20),
+  description VARCHAR(500),
+  price DECIMAL(10, 2),
+  item_photo VARCHAR(255),
+  member_id INT,
+  FOREIGN KEY (member_id) REFERENCES member(id)
 );
