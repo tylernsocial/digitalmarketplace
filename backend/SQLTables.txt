@@ -14,6 +14,11 @@ CREATE TABLE member (
   role ENUM('buyer', 'seller')
 );
 
+CREATE TABLE category (
+  category_id INT PRIMARY KEY,
+  categody_name VARCHAR(30)
+)
+
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     total_cost DECIMAL(10, 2),
@@ -34,7 +39,7 @@ CREATE TABLE items (
   FOREIGN KEY (member_id) REFERENCES member(id)
 );
 
-CREATE TABLE Review (
+CREATE TABLE review (
     review_id INT AUTO_INCREMENT,
     member_id INT,
     item_id INT,

@@ -1,6 +1,6 @@
-import express from "express"
-import mysql from "mysql"
-import cors from "cors"
+import cors from "cors";
+import express from "express";
+import mysql from "mysql";
 
 const app = express()
 
@@ -112,6 +112,29 @@ app.get("/test-db", (req, res) => {
         res.status(200).json({ message: "Database connection successful!" });
     });
 });
+
+app.delete("/items/:item_id", (req, res)=>{
+    const item_id = req.params.item_id;
+    const q = "DELETE FROM items WHERE item_id = ?";
+
+    db.query(q,[item_id], (err, data)=>{
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Item deleted");
+    }
+);
+});
+
+app.put("/items/:item_id", (req, res) => {
+    const { item_id } = req.params;
+    const { item_name, price, description } = req.body;
+  
+    const q = "UPDATE items SET item_name = ?, price = ?, description = ? WHERE item_id = ?";
+    db.query(q, [item_name, price, description, item_id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Item updated successfully");
+    });
+  });
+
 app.listen(8800, () =>{
     console.log("Connected to backend!")
 })
