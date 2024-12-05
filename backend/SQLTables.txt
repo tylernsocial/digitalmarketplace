@@ -14,9 +14,14 @@ CREATE TABLE member (
   role ENUM('buyer', 'seller')
 );
 
+CREATE TABLE category (
+  category_id INT PRIMARY KEY,
+  categody_name VARCHAR(30)
+)
+
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    total_cost DECIMAL(10, 2),
+    cost DECIMAL(10, 2),
     order_status VARCHAR(30),
     member_id INT,
     FOREIGN KEY (member_id) REFERENCES member(id)
@@ -32,4 +37,15 @@ CREATE TABLE items (
   item_photo VARCHAR(255),
   member_id INT,
   FOREIGN KEY (member_id) REFERENCES member(id)
+);
+
+CREATE TABLE review (
+    review_id INT AUTO_INCREMENT,
+    member_id INT,
+    item_id INT,
+    comments VARCHAR(500),
+    rating INT,
+    FOREIGN KEY (member_id) REFERENCES member(id)
+    FOREIGN KEY (item_id) REFERENCES items(item_id)
+    CHECK (Rating BETWEEN 1 AND 5)
 );

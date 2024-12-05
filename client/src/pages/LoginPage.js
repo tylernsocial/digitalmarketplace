@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
+import { useNavigate } from "react-router-dom";
+
 
 export const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,9 +28,18 @@ export const LoginPage = () => {
 
       if (response.ok) {
         const data = await response.json(); // Parse the successful response
+        localStorage.setItem("id", data.member_id); // Store member_id
+        localStorage.setItem("name", data.name);
         alert(`Welcome back, ${data.name || "User"}!`);
         // Optionally redirect to a dashboard or another page
         // navigate('/dashboard');
+        // Redirect based on role
+        if (data.role === "buyer") {
+          navigate("/buyer-home-page");
+        } else if (data.role === "seller") {
+          navigate("/seller-home-page");
+        }
+
       } else {
         const errorData = await response.json(); // Extract error details from backend response
         alert(`Error: ${errorData.message || "Invalid email or password."}`);
