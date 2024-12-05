@@ -135,7 +135,30 @@ app.put("/items/:item_id", (req, res) => {
     });
 });
 
-// Create a payment
+// Get order
+app.get("/orders", (req, res) => {
+    const q = `
+      SELECT 
+        o.order_id, 
+        o.total_cost, 
+        i.item_id, 
+        i.item_name, 
+        i.price, 
+        i.description, 
+        i.item_photo 
+      FROM orders o
+      JOIN items i ON o.items_id = i.item_id`;
+  
+    db.query(q, (err, data) => {
+      if (err) {
+        console.error("Error fetching orders:", err);
+        return res.status(500).json({ error: "Failed to fetch orders" });
+      }
+      return res.status(200).json(data);
+    });
+  });
+  
+
 
 
 app.listen(8800, () =>{
