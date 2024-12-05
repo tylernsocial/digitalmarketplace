@@ -21,7 +21,7 @@ CREATE TABLE category (
 
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    total_cost DECIMAL(10, 2),
+    cost DECIMAL(10, 2),
     order_status VARCHAR(30),
     member_id INT,
     FOREIGN KEY (member_id) REFERENCES member(id)

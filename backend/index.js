@@ -133,7 +133,10 @@ app.put("/items/:item_id", (req, res) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json("Item updated successfully");
     });
-  });
+});
+
+// Create a payment
+
 
 app.listen(8800, () =>{
     console.log("Connected to backend!")

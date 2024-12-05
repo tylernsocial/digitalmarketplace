@@ -55,12 +55,12 @@
     left: 20px;
     margin-top: 60px;
     background-color: #5e7894;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .item-single {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -88,6 +88,23 @@
     cursor: pointer;
 }
 
+.order-container{
+    font-size: 1.5rem;  /* Adjust as needed */
+    color: #5e7894;
+    position: absolute; /* Use absolute positioning */
+    top: 0; /* Align to the top */
+    right: 0; /* Align to the left */
+    margin: 0; /* Remove margins to avoid unintended space */
+    padding: 4rem;
+}
+
+.checkorders{
+    border: border;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: rgb(139, 199, 139);
+    cursor: pointer;
+}
 .add{
     border: border;
     border-radius: 5px;
@@ -129,7 +146,7 @@
 
 
 .item-single h2, .item-single p {
-    margin: 10px 0;
+    margin: 0px;
     font-size: 0.9rem;
     color: #000000;
 }

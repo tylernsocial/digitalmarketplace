@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './SellerHomePage.css';
 
 export const SellerHomePage = () => {
@@ -106,6 +106,11 @@ export const SellerHomePage = () => {
     // Seller title
     <div className="sellerpage-container">
       <h1 className="sellerpage-title">Welcome to the Seller's portal, {memberName}!</h1>
+      <div className="order-container">
+      <button className="checkorders">
+        <Link to="/seller-orders">Check Orders</Link>
+      </button>
+      </div>
     {/*Seller Search*/}
       <div className="sellerpage-search">
         <form onSubmit={handleSearch} style={{ width: "100%" }}>
@@ -141,7 +146,6 @@ export const SellerHomePage = () => {
  {/* Add Item Form */}
  <div className="sellerpage-right">
                 <h1 className="add-item-title">Add New Item</h1>
-                
                 <form>
                     {/* Item Name */}
                     <input
