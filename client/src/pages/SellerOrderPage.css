@@ -8,23 +8,67 @@
     text-align: center;
   }
   
-  .sellerorder-page {
+  .order {
+    width: 400px;
+    height: 400px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: baseline;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .item-single {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: 300px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .item-single img {
+  .order img {
     width: 100%;
     height: auto;
     border-radius: 8px;
   }
-  
+
+  .ship-order{
+    border: border;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: rgb(139, 199, 139);
+    cursor: pointer;
+  }
+
+  /* Header Section */
+.order-header h3 {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* Details Section */
+.order-details h4,
+.order-status h4 {
+  margin: 10px 0 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.order-details p,
+.order-status p {
+  font-size: 14px;
+  color: #666;
+  margin: 3px 0;
+}
+
+/* Order Photo */
+.order-photo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+}
+
+.ship-order:hover {
+  background-color: #0056b3;
+}

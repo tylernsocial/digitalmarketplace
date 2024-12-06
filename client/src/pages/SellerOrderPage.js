@@ -6,10 +6,22 @@ import './SellerOrderPage.css';
 export const SellerOrderPage = () => {
   const memberId = localStorage.getItem("id");
   const memberName = localStorage.getItem("name");
+  
 
   const navigate = useNavigate();
 
   const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+
+  const handleStatus = async (orderId) => {
+    try {
+      await axios.put(`http://localhost:8800/orders/${orderId}`);
+      window.location.reload(); // Reload to show updated data
+    } catch (err) {
+      console.log("Error updating item:", err);
+    }
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -38,22 +50,38 @@ export const SellerOrderPage = () => {
 
       {/* Display Orders */}
       <div className="sellerorder-page">
-        <div className="item-grid">
           {orders.map((order) => (
-            <div className="item-single" key={order.order_id}>
-              <h2>Order ID: {order.order_id}</h2>
-              <h2>Total Cost: ${order.total_cost}</h2>
-              <h3>Item Details:</h3>
-              <p>Item Name: {order.item_name}</p>
-              <p>Price: ${order.price}</p>
-              <p>Description: {order.description}</p>
-              {order.item_photo && (
-                <img src={order.item_photo} alt={order.item_name} style={{ width: "200px" }} />
-              )}
-            </div>
-          ))}
-        </div>
+            <div className="order" key={order.order_id}>
+              <h3>Order ID: {order.order_id}</h3>
+              <h3>Placed By: {order.fname + " " + order.lname}</h3>
+              <h3>Total Cost: ${order.total_cost}</h3>
+
+              <div className="order-details">
+        <h4>Item Details:</h4>
+        <p>Item Name: {order.item_name}</p>
+        <p>Price: ${order.price}</p>
       </div>
+              
+      <div className="order-status">
+        <h4>Order Status: {order.order_status}</h4>
+        {order.item_photo && (
+          <img 
+            src={order.item_photo} 
+            alt={order.item_name} 
+            className="order-photo"
+          />
+        )}
+      </div>
+
+      <button 
+        className="ship-order" 
+        onClick={() => handleStatus(order.order_id)}
+      >
+        Ship Order
+      </button>
+    </div>
+  ))}
+</div>
     </div>
   );
 };

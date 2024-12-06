@@ -141,13 +141,18 @@ app.get("/orders", (req, res) => {
       SELECT 
         o.order_id, 
         o.total_cost, 
+        o.order_status,
+        o.member_id,
         i.item_id, 
         i.item_name, 
         i.price, 
         i.description, 
-        i.item_photo 
+        i.item_photo,
+        m.fname,
+        m.lname 
       FROM orders o
-      JOIN items i ON o.items_id = i.item_id`;
+      JOIN items i ON o.items_id = i.item_id
+      JOIN member m ON m.id = o.member_id`;
   
     db.query(q, (err, data) => {
       if (err) {
@@ -159,6 +164,16 @@ app.get("/orders", (req, res) => {
   });
   
 
+app.put("/orders/:order_id", (req, res) => {
+    const { order_id } = req.params;
+    const { order_status } = req.body;
+  
+    const q = "UPDATE orders SET order_status = 'Shipping' WHERE order_id = ?";
+    db.query(q, [order_id, order_status], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Order updated successfully");
+    });
+});
 
 
 app.listen(8800, () =>{
