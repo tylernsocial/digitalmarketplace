@@ -1,12 +1,13 @@
-import express from "express"
-import mysql from "mysql"
-import cors from "cors"
+import cors from "cors";
+import express from "express";
+import mysql from "mysql";
 
 const app = express()
 
 app.use(express.json());
 app.use(cors());
 
+// Create database connection
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -46,6 +47,7 @@ app.get("/items", (req, res)=>{
     });
 });
 
+// Create new items and add to table
 app.post("/items", (req, res) => {
     const { item_name, item_condition, size, description, price, item_photo, member_id } = req.body;
   
@@ -103,6 +105,8 @@ app.post("/api/login", (req, res) => {
         return res.status(200).json({ member_id: data[0].id, name: data[0].fname, role:data[0].role});
     });
 });
+
+// Test database connection
 app.get("/test-db", (req, res) => {
     db.query("SELECT 1", (err, result) => {
         if (err) {
@@ -112,6 +116,72 @@ app.get("/test-db", (req, res) => {
         res.status(200).json({ message: "Database connection successful!" });
     });
 });
+
+// Delete an item
+app.delete("/items/:item_id", (req, res)=>{
+    const item_id = req.params.item_id;
+    const q = "DELETE FROM items WHERE item_id = ?";
+
+    db.query(q,[item_id], (err, data)=>{
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Item deleted");
+    }
+);
+});
+
+// Modify an item
+app.put("/items/:item_id", (req, res) => {
+    const { item_id } = req.params;
+    const { item_name, price, description } = req.body;
+  
+    const q = "UPDATE items SET item_name = ?, price = ?, description = ? WHERE item_id = ?";
+    db.query(q, [item_name, price, description, item_id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Item updated successfully");
+    });
+});
+
+// Get all orders
+app.get("/orders", (req, res) => {
+    const q = `
+      SELECT 
+        o.order_id, 
+        o.total_cost, 
+        o.order_status,
+        o.member_id,
+        i.item_id, 
+        i.item_name, 
+        i.price, 
+        i.description, 
+        i.item_photo,
+        m.fname,
+        m.lname 
+      FROM orders o
+      JOIN items i ON o.items_id = i.item_id
+      JOIN member m ON m.id = o.member_id`;
+  
+    db.query(q, (err, data) => {
+      if (err) {
+        console.error("Error fetching orders:", err);
+        return res.status(500).json({ error: "Failed to fetch orders" });
+      }
+      return res.status(200).json(data);
+    });
+  });
+  
+// Update an order's status
+app.put("/orders/:order_id", (req, res) => {
+    const { order_id } = req.params;
+    const { order_status } = req.body;
+  
+    const q = "UPDATE orders SET order_status = ? WHERE order_id = ?";
+    db.query(q, [order_status, order_id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Order updated successfully");
+    });
+});
+
+
 app.listen(8800, () =>{
     console.log("Connected to backend!")
 })

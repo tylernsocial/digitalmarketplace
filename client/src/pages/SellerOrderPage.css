@@ -1,0 +1,87 @@
+.sellerorder-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #c5e1ff;
+    text-align: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .sellerorder-page{
+    display: flex;
+    flex-direction: row; /* Ensures items are placed horizontally */
+    align-items: center; /* Centers items vertically */
+    justify-content: center; /* Centers items horizontally */
+    height: 100vh; /* Makes the container take the full viewport height */
+    background-color: #c5e1ff; /* Background color */
+    text-align: center; /* Centers text within each order */
+    gap: 20px; /* Adds spacing between orders */
+    padding: 20px; /* Optional: Adds padding around the container */
+    box-sizing: border-box; /* Ensures padding doesn't affect width/height */
+  }
+  
+  .order {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: scroll;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order img {
+    width: 90px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .ship-order{
+    border: border;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: rgb(139, 199, 139);
+    cursor: pointer;
+  }
+
+  /* Header Section */
+.order-header h3 {
+  font-size: 16px;
+  color: #333;
+  margin: 0px 0;
+}
+
+/* Details Section */
+.order-details h4,
+.order-status h4 {
+  margin: 5px 0 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.order-details p,
+.order-status p {
+  font-size: 14px;
+  color: #666;
+  margin: 0px 0;
+}
+
+.ship-order:hover {
+  background-color: #0056b3;
+}
+
+.release-funds {
+  border: border;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: rgb(139, 199, 139);
+    cursor: pointer;
+}

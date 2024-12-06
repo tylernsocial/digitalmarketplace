@@ -55,21 +55,63 @@
     left: 20px;
     margin-top: 60px;
     background-color: #5e7894;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
-    .item-single {
-        width: 150px;
-        height: 150px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
+.item-single {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+.modify{
+    border: border;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background: rgb(241, 241, 172);
+    cursor: pointer;
+}
+
+.delete{
+    border: border;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background: rgb(245, 153, 153);
+    cursor: pointer;
+}
+
+.order-container{
+    font-size: 1.5rem;  /* Adjust as needed */
+    color: #5e7894;
+    position: absolute; /* Use absolute positioning */
+    top: 0; /* Align to the top */
+    right: 0; /* Align to the left */
+    margin: 0; /* Remove margins to avoid unintended space */
+    padding: 4rem;
+}
+
+.checkorders{
+    border: border;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: rgb(139, 199, 139);
+    cursor: pointer;
+}
+.add{
+    border: border;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background: rgb(139, 199, 139);
+    cursor: pointer;
+}
 
 .sellerpage-right {
     display: flex;
@@ -104,7 +146,7 @@
 
 
 .item-single h2, .item-single p {
-    margin: 10px 0;
+    margin: 0px;
     font-size: 0.9rem;
     color: #000000;
 }
@@ -192,3 +234,25 @@
     margin-right: 0.5rem; /* Space between radio button and label text */
     vertical-align: left; /* Align radio button with text */
 }
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  

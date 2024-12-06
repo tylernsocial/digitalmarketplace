@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
-import './SellerHomePage.css'; 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import './SellerHomePage.css';
 
 export const SellerHomePage = () => {
         const memberId = localStorage.getItem("id");
         const memberName = localStorage.getItem("name");
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const [selectedItem, setSelectedItem] = useState(null);
+
 
         const navigate = useNavigate()
 
@@ -25,7 +28,33 @@ export const SellerHomePage = () => {
           const { name, value } = e.target;
           addItem(prev => ({ ...prev, [name]: value }));
       };
+      
+      const handleDelete = async (itemId) => {
+        try{
+          await axios.delete(`http://localhost:8800/items/${itemId}`)
+          window.location.reload()
+        } catch(err){
+          console.log(err)
+        }
+      }
 
+      const handleModify = (itemId) => {
+        const itemToModify = items.find(item => item.item_id === itemId);
+        setSelectedItem(itemToModify);
+        setIsModalOpen(true);
+      };
+
+      const handleUpdate = async () => {
+        try {
+          await axios.put(`http://localhost:8800/items/${selectedItem.item_id}`, selectedItem);
+          setIsModalOpen(false); // Close the modal after successful update
+          window.location.reload(); // Reload to show updated data
+        } catch (err) {
+          console.log("Error updating item:", err);
+        }
+      };
+      
+      
       const handleClick = async (e) => {
         e.preventDefault();
         try {
@@ -77,6 +106,11 @@ export const SellerHomePage = () => {
     // Seller title
     <div className="sellerpage-container">
       <h1 className="sellerpage-title">Welcome to the Seller's portal, {memberName}!</h1>
+      <div className="order-container">
+      <button className="checkorders">
+        <Link to="/seller-orders">Check Orders</Link>
+      </button>
+      </div>
     {/*Seller Search*/}
       <div className="sellerpage-search">
         <form onSubmit={handleSearch} style={{ width: "100%" }}>
@@ -93,7 +127,7 @@ export const SellerHomePage = () => {
       <div className ="sellerpage-left">
       <div className="item-grid">
           {items.map((item, index)=>(
-            <div className="item-single" key={item.id || index}>
+            <div className="item-single" key={item.item_id || index}>
               {item.item_photo && (
                 <img src={item.item_photo} alt={item.item_name} />
               )}
@@ -101,7 +135,9 @@ export const SellerHomePage = () => {
               <div className="item-details-inline">
               <p>${item.price}</p>
               <p>Size: {item.size}</p>
-            </div>
+            </div>  
+            <button classname="modify" onClick={()=>handleModify(item.item_id)}>Modify</button>
+            <button className="delete" onClick={()=>handleDelete(item.item_id)}>Delete</button>
             </div>
           ))}
         </div>
@@ -110,7 +146,6 @@ export const SellerHomePage = () => {
  {/* Add Item Form */}
  <div className="sellerpage-right">
                 <h1 className="add-item-title">Add New Item</h1>
-                
                 <form>
                     {/* Item Name */}
                     <input
@@ -187,10 +222,39 @@ export const SellerHomePage = () => {
                     />
 
                     {/* Submit Button */}
-                    <button onClick={handleClick}>Add Item</button>
+                    <button className= "add" onClick={handleClick}>Add Item</button>
                 </form>
             </div>
-        </div>
-        
+             {/* Modal for modifying item */}
+  {isModalOpen && selectedItem && (
+    <div className="modal">
+      <div className="modal-content">
+        <h2>Modify Item</h2>
+        <input
+          type="text"
+          name="item_name"
+          value={selectedItem.item_name}
+          onChange={(e) => setSelectedItem({ ...selectedItem, item_name: e.target.value })}
+          placeholder="Item Name"
+        />
+        <input
+          type="number"
+          name="price"
+          value={selectedItem.price}
+          onChange={(e) => setSelectedItem({ ...selectedItem, price: e.target.value })}
+          placeholder="Price"
+        />
+        <textarea
+          name="description"
+          value={selectedItem.description}
+          onChange={(e) => setSelectedItem({ ...selectedItem, description: e.target.value })}
+          placeholder="Description"
+        />
+        <button onClick={handleUpdate}>Save Changes</button>
+        <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+      </div>
+    </div>
+  )}
+</div> 
   )
 }
