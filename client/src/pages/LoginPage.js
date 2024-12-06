@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
+import "./LoginPage.css";
 
 
 export const LoginPage = () => {
@@ -38,6 +38,8 @@ export const LoginPage = () => {
           navigate("/buyer-home-page");
         } else if (data.role === "seller") {
           navigate("/seller-home-page");
+        } else if (data.role === "middleman"){
+          navigate("/middleman-page")
         }
 
       } else {
