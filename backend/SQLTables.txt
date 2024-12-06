@@ -24,7 +24,11 @@ CREATE TABLE orders (
     cost DECIMAL(10, 2),
     order_status VARCHAR(30),
     member_id INT,
-    FOREIGN KEY (member_id) REFERENCES member(id)
+    item_id INT,
+    FOREIGN KEY (member_id) REFERENCES member(id),
+    FOREIGN KEY (item_id) REFERENCES items(item_id),
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
 );
 
 CREATE TABLE items (
