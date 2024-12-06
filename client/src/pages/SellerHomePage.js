@@ -8,6 +8,7 @@ export const SellerHomePage = () => {
         const memberName = localStorage.getItem("name");
         const [isModalOpen, setIsModalOpen] = useState(false);
         const [selectedItem, setSelectedItem] = useState(null);
+        const [totalProfits, setTotalProfits] = useState(0); // calculating profits
 
 
         const navigate = useNavigate()
@@ -88,6 +89,24 @@ export const SellerHomePage = () => {
           fetchItems(); // Trigger the fetch when the component mounts
       }, [memberId, navigate]);
       
+      // calculating funds
+      useEffect(() => {
+        const fetchProfits = async () => {
+            try {
+                // First check the orders
+                const ordersCheck = await axios.get(`http://localhost:8800/check-orders/${memberId}`);
+                console.log("Orders check:", ordersCheck.data);
+    
+                const res = await axios.get(`http://localhost:8800/profits/seller/${memberId}`);
+                console.log("Profits response:", res.data);
+                setTotalProfits(res.data.total || 0);
+            } catch (err) {
+                console.error("Error fetching profits:", err);
+            }
+        };
+        fetchProfits();
+    }, [memberId]);
+
         // State to manage search query
         const [searchQuery, setSearchQuery] = useState("");
   
@@ -106,6 +125,10 @@ export const SellerHomePage = () => {
     // Seller title
     <div className="sellerpage-container">
       <h1 className="sellerpage-title">Welcome to the Seller's portal, {memberName}!</h1>
+      <div className="profit-container">
+          <h2 className="profit-title">Total Profits: ${totalProfits.toFixed(2)}</h2>
+      </div>
+
       <div className="order-container">
       <button className="checkorders">
         <Link to="/seller-orders">Check Orders</Link>

@@ -120,6 +120,17 @@ export const SignUpPage = () => {
             />
             Seller
           </label>
+          {/* for testing, delete later */}
+          <label>
+            <input
+              type="radio"
+              name="role"
+              value="middleman"
+              checked={formData.role === "middleman"}
+              onChange={handleChange}
+            />
+            middleman
+          </label>
         </div>
 
         <button type="submit">Sign Up</button>
