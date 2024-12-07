@@ -107,20 +107,6 @@ export const SellerHomePage = () => {
         fetchProfits();
     }, [memberId]);
 
-        // State to manage search query
-        const [searchQuery, setSearchQuery] = useState("");
-  
-        // Handle the change in input field
-        const handleSearchChange = (e) => {
-          setSearchQuery(e.target.value);
-        };
-      
-        // Handle form submission or search button click
-        const handleSearch = (e) => {
-          e.preventDefault();
-          // Logic for search (for now, just log the query)
-          console.log("Searching for:", searchQuery);
-        };
   return (
     // Seller title
     <div className="sellerpage-container">
@@ -128,22 +114,13 @@ export const SellerHomePage = () => {
       <div className="profit-container">
           <h2 className="profit-title">Total Profits: ${totalProfits.toFixed(2)}</h2>
       </div>
-
       <div className="order-container">
       <button className="checkorders">
         <Link to="/seller-orders">Check Orders</Link>
       </button>
-      </div>
-    {/*Seller Search*/}
-      <div className="sellerpage-search">
-        <form onSubmit={handleSearch} style={{ width: "100%" }}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search..."
-          />
-        </form>
+      <button className="back-button">
+                <Link to="/">Logout</Link>
+            </button>
       </div>
       
       {/*Display Items */}
@@ -159,8 +136,8 @@ export const SellerHomePage = () => {
               <p>${item.price}</p>
               <p>Size: {item.size}</p>
             </div>  
-            <button classname="modify" onClick={()=>handleModify(item.item_id)}>Modify</button>
-            <button className="delete" onClick={()=>handleDelete(item.item_id)}>Delete</button>
+            <button onClick={()=>handleModify(item.item_id)}>Modify</button>
+            <button onClick={()=>handleDelete(item.item_id)}>Delete</button>
             </div>
           ))}
         </div>

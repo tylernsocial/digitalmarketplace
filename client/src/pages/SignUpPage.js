@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 
 export const SignUpPage = () => {
@@ -133,7 +133,7 @@ export const SignUpPage = () => {
           </label>
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit"> <Link to="/">Sign Up</Link></button>
       </form>
     </div>
   );

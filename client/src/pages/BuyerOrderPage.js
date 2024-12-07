@@ -1,7 +1,7 @@
 // BuyerOrderPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './BuyerOrderPage.css';
 
 export const BuyerOrderPage = () => {
@@ -48,6 +48,11 @@ export const BuyerOrderPage = () => {
 
     return (
         <div className="buyerorder-container">
+            <div className="order-container">
+            <button className="buyerback-button">
+                <Link to="/buyer-home-page">Back</Link>
+            </button>
+            </div>
             <h1 className="buyerpage-title">Welcome to the Buyer's Portal, {memberName}!</h1>
 
             <div className="buyerorder-page">

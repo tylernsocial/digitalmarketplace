@@ -14,11 +14,6 @@ CREATE TABLE member (
   role ENUM('buyer', 'seller', 'middleman')
 );
 
-CREATE TABLE category (
-  category_id INT PRIMARY KEY,
-  category_name VARCHAR(30)
-);
-
 CREATE TABLE items (
   item_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   item_name VARCHAR(50),

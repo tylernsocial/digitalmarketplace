@@ -44,7 +44,6 @@
     background-color: white;
     border-radius: 10px;
     padding: 20px;
-    overflow-y: auto; /* Allow scrolling within each order card */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px; /* Ensure spacing between orders */
 }
@@ -102,3 +101,15 @@
 .receive-order:hover {
     background-color: #0056b3;
 }
+.buyerback-button{
+    background: #355e8a;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: semibold;
+  }

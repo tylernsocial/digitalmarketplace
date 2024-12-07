@@ -89,13 +89,15 @@
 }
 
 .item-single button {
-    margin-top: 10px;
+    margin-top: 0px;
     padding: 5px 10px;
     background-color: #355e8a;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: semibold;
+    text-decoration: none;
 }
 
 .item-single button:hover {
