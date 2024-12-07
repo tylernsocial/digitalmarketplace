@@ -72,22 +72,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-.modify{
-    border: border;
-    border-radius: 5px;
-    padding: 3px 6px;
-    background: rgb(241, 241, 172);
-    cursor: pointer;
-}
-
-.delete{
-    border: border;
-    border-radius: 5px;
-    padding: 3px 6px;
-    background: rgb(245, 153, 153);
-    cursor: pointer;
-}
-
 .order-container{
     font-size: 1.5rem;  /* Adjust as needed */
     color: #5e7894;
@@ -101,7 +85,7 @@
 .profit-container {
     position: absolute;
     top: 60px;
-    right: 34%;
+    right: 15%;
     background-color: #5e7894;
     padding: 15px;
     border-radius: 10px;
@@ -120,12 +104,31 @@
     background: rgb(139, 199, 139);
     cursor: pointer;
 }
-.add{
+
+.add {
     border: border;
     border-radius: 5px;
     padding: 3px 6px;
     background: rgb(139, 199, 139);
     cursor: pointer;
+}
+
+
+.modify{
+    border: border;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background: rgb(241, 241, 172);
+    cursor: pointer;
+}
+
+.delete{
+    border: border;
+    border-radius: 5px;
+    padding: 3px 6px;
+    background: rgb(245, 153, 153);
+    cursor: pointer;
+    gap: 2px;
 }
 
 .sellerpage-right {

@@ -27,19 +27,30 @@ app.get("/member", (req, res)=>{
     })
 })
 
-// Get items based on member
-app.get("/items/member", (req, res)=>{
+// Get items based on member where order_status is not 'Completed'
+app.get("/items/member", (req, res) => {
     const memberId = req.query.member_id;
-    const q = "SELECT * FROM items WHERE member_id = ?";
-    db.query(q, [memberId], (err,data)=>{
-        if (err) return res.json(err);
-        return res.json(data);
+    const q = `
+            SELECT 
+            i.*, 
+            o.order_status 
+        FROM items i
+        LEFT JOIN orders o ON i.item_id = o.items_id
+        WHERE i.member_id = ? AND (o.order_status IS NULL OR o.order_status != 'Completed')
+
+    `;
+    db.query(q, [memberId], (err, data) => {
+        if (err) {
+            console.error("Error fetching items for member:", err);
+            return res.status(500).json(err);
+        }
+        return res.status(200).json(data);
     });
 });
 
 // Get all items
 app.get("/items", (req, res)=>{
-    const q = "SELECT * FROM items"
+    const q = "SELECT i.*, o.order_status FROM items AS i LEFT JOIN orders AS o ON i.item_id = o.items_id WHERE (o.order_status IS NULL OR o.order_status != 'Completed')"
     db.query(q, (err,data)=>{
         if (err) return res.json(err);
         return res.json(data);
@@ -177,6 +188,7 @@ app.get("/orders", (req, res) => {
         JOIN items i ON o.items_id = i.item_id
         JOIN member b ON o.member_id = b.id
         JOIN member s ON i.member_id = s.id
+        WHERE o.archived = 0
         ORDER BY o.order_id DESC`;
 
     db.query(q, (err, data) => {
@@ -205,7 +217,7 @@ app.get("/orders/buyer/:member_id", (req, res) => {
         FROM orders o
         JOIN items i ON o.items_id = i.item_id
         JOIN member m ON m.id = i.member_id
-        WHERE o.member_id = ?
+        WHERE o.member_id = ? AND o.archived = 0
         ORDER BY o.order_id DESC`;
 
     db.query(q, [memberId], (err, data) => {
@@ -224,6 +236,21 @@ app.put("/orders/:order_id", (req, res) => {
     
     const q = "UPDATE orders SET order_status = ?, funds_released = ? WHERE order_id = ?";
     db.query(q, [order_status, funds_released, order_id], (err, data) => {
+        if (err) {
+            console.error("Error updating order:", err);
+            return res.status(500).json(err);
+        }
+        return res.status(200).json("Order updated successfully");
+    });
+});
+
+app.put("/orders/archive/:order_id", (req, res) => {
+    const { order_id } = req.params;
+    console.log(`Archiving order with ID: ${order_id}`); // Debugging
+
+
+    const q = "UPDATE orders SET archived = '1' WHERE order_id = ?";
+    db.query(q, [order_id], (err, data) => {
         if (err) {
             console.error("Error updating order:", err);
             return res.status(500).json(err);
@@ -252,7 +279,7 @@ app.get("/orders/seller/:member_id", (req, res) => {
         FROM orders o
         JOIN items i ON o.items_id = i.item_id
         JOIN member m ON m.id = o.member_id
-        WHERE i.member_id = ?
+        WHERE i.member_id = ? AND o.archived = 0
         ORDER BY o.order_id DESC`;
 
     db.query(q, [sellerId], (err, data) => {
@@ -302,21 +329,37 @@ app.get("/check-orders/:seller_id", (req, res) => {
     });
 });
 
-// Archive order endpoint 
-// fix this
-app.put("/orders/archive/:order_id", (req, res) => {
-    const orderId = req.params.order_id;
-    const q = "UPDATE orders SET archived = TRUE WHERE order_id = ?";
-    
-    db.query(q, [orderId], (err, data) => {
+// for seller's orders archived
+app.get("/orders/seller/archieved/:member_id", (req, res) => {
+    const sellerId = req.params.member_id;
+    const q = `
+        SELECT 
+            o.order_id, 
+            o.cost,
+            o.order_status,
+            i.item_id, 
+            i.item_name, 
+            i.item_photo,
+            i.price,
+            i.description,
+            i.size,
+            i.item_condition,
+            m.fname as buyer_fname,
+            m.lname as buyer_lname
+        FROM orders o
+        JOIN items i ON o.items_id = i.item_id
+        JOIN member m ON m.id = o.member_id
+        WHERE i.member_id = ? AND o.archived = 1
+        ORDER BY o.order_id DESC`;
+
+    db.query(q, [sellerId], (err, data) => {
         if (err) {
-            console.error("Error archiving order:", err);
+            console.error("Error fetching seller orders:", err);
             return res.status(500).json(err);
         }
-        return res.status(200).json("Order archived successfully");
+        return res.status(200).json(data);
     });
 });
-
 // Delete all orders related to an item
 app.delete("/orders/item/:item_id", (req, res) => {
     const itemId = req.params.item_id;
@@ -331,9 +374,11 @@ app.delete("/orders/item/:item_id", (req, res) => {
     });
 });
 
-// 
+// items
 app.delete("/items/:item_id", (req, res) => {
     const itemId = req.params.item_id;
+    console.log(`Deleting item with ID: ${itemId}`); // Debugging log
+
     const q = "DELETE FROM items WHERE item_id = ?";
 
     db.query(q, [itemId], (err, data) => {

@@ -35,7 +35,7 @@
 
 .order {
     width: 400px;
-    height: 600px; /* Increased height to show all content */
+    height: 450px; /* Increased height to show all content */
     min-width: 400px; /* Ensure consistent width */
     display: flex;
     flex-direction: column;
@@ -46,6 +46,7 @@
     padding: 20px;
     overflow-y: auto; /* Allow scrolling within each order card */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Ensure spacing between orders */
 }
 
 .order h3 {
