@@ -6,6 +6,8 @@ import { MiddleManPage } from "./pages/MiddleManPage";
 import { SellerHomePage } from "./pages/SellerHomePage";
 import { SellerOrderPage } from "./pages/SellerOrderPage";
 import { SignUpPage } from "./pages/SignUpPage";
+import { CheckoutPage } from './pages/CheckoutPage';
+import { BuyerOrderPage } from './pages/BuyerOrderPage';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/buyer-home-page" element={<BuyerHomePage />}/>
           <Route path="seller-orders" element={<SellerOrderPage/>}/>
           <Route path="middleman-page" element={<MiddleManPage/>}/>
+          <Route path="/checkout-page" element={<CheckoutPage />} />
+          <Route path="/buyer-orders" element={<BuyerOrderPage />} />
         </Routes>
       </BrowserRouter>
     </div>

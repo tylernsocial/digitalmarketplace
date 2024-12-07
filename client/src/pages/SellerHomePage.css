@@ -98,6 +98,21 @@
     padding: 4rem;
 }
 
+.profit-container {
+    position: absolute;
+    top: 60px;
+    right: 34%;
+    background-color: #5e7894;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.profit-title {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
 .checkorders{
     border: border;
     border-radius: 5px;
