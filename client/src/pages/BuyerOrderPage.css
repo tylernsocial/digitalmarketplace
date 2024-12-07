@@ -1,0 +1,115 @@
+.buyerorder-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #c5e1ff;
+    text-align: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.buyerpage-title {
+    color: #5e7894;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 1rem;
+}
+
+.buyerorder-page {
+    display: flex;
+    flex-direction: row; /* Changed from column to row */
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #c5e1ff;
+    text-align: center;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 60px; /* Add space for the title */
+    box-sizing: border-box;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+
+.order {
+    width: 400px;
+    height: 450px; /* Increased height to show all content */
+    min-width: 400px; /* Ensure consistent width */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Ensure spacing between orders */
+}
+
+.order h3 {
+    color: #5e7894;
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.order-details {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.order-details h4,
+.order-status h4 {
+    color: #5e7894;
+    margin: 5px 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.order-details p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.order-status {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.order-status img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.receive-order {
+    padding: 10px 20px;
+    background-color: rgb(139, 199, 139);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.receive-order:hover {
+    background-color: #0056b3;
+}
+.buyerback-button{
+    background: #355e8a;
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: semibold;
+  }
