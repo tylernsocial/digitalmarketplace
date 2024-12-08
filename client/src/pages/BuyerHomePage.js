@@ -83,6 +83,9 @@ export const BuyerHomePage = () => {
   return (
       <div className="buyerpage-container">
           <h1 className="buyerpage-title">Welcome to the Digital Marketplace!</h1>
+          <button className="back-button">
+                <Link to="/">Logout</Link>
+            </button>
           <div className="order-container">
             <button className="checkorders">
                 <Link to="/buyer-orders">Check Orders</Link>

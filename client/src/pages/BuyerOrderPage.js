@@ -76,6 +76,12 @@ export const BuyerOrderPage = () => {
     return (
         <div className="buyerorder-container">
             <h1 className="buyerpage-title">Welcome to the Buyer's Portal, {memberName}!</h1>
+            <button
+                className="back-button"
+                onClick={() => navigate("/buyer-home-page")}
+                >
+            Back
+            </button>
             <div className="buyerorder-page">
                 <div className="orders-container">
                     <h2 className="section-title">Current Orders</h2>
