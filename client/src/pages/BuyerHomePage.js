@@ -87,9 +87,6 @@ export const BuyerHomePage = () => {
             <button className="checkorders">
                 <Link to="/buyer-orders">Check Orders</Link>
             </button>
-            <button className="back-button">
-                <Link to="/">Logout</Link>
-            </button>
         </div>
           <div className="buyer-content">
               {/* Display Items */}

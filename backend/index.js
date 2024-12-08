@@ -150,21 +150,51 @@ app.put("/items/:item_id", (req, res) => {
 app.post("/orders", (req, res) => {
     const { total_cost, order_status, member_id, items_id } = req.body;
     
-    // Validate required fields
-    if (!total_cost || !order_status || !member_id || !items_id) {
-        console.error("Missing required fields:", { total_cost, order_status, member_id, items_id });
-        return res.status(400).json("Missing required fields");
+    // Convert member_id and items_id to integers
+    const memberId = parseInt(member_id);
+    const itemsId = parseInt(items_id);
+    
+    // Validate required fields and types
+    if (!total_cost || !order_status || !memberId || !itemsId) {
+        console.error("Missing or invalid required fields:", { total_cost, order_status, memberId, itemsId });
+        return res.status(400).json("Missing or invalid required fields");
     }
 
-    const q = "INSERT INTO orders (cost, order_status, member_id, items_id) VALUES (?, ?, ?, ?)";
-    
-    // Note: Using cost instead of total_cost to match your database structure
-    db.query(q, [total_cost, order_status, member_id, items_id], (err, data) => {
+    // Verify member exists before creating order
+    db.query("SELECT id FROM member WHERE id = ?", [memberId], (err, memberResult) => {
         if (err) {
-            console.error("Database error:", err);
+            console.error("Error checking member:", err);
             return res.status(500).json(err);
         }
-        return res.status(200).json("Order has been created");
+        
+        if (memberResult.length === 0) {
+            return res.status(404).json("Member not found");
+        }
+
+        // Verify item exists
+        db.query("SELECT item_id FROM items WHERE item_id = ?", [itemsId], (err, itemResult) => {
+            if (err) {
+                console.error("Error checking item:", err);
+                return res.status(500).json(err);
+            }
+            
+            if (itemResult.length === 0) {
+                return res.status(404).json("Item not found");
+            }
+
+            // Create the order
+            const q = "INSERT INTO orders (cost, order_status, member_id, items_id) VALUES (?, ?, ?, ?)";
+            db.query(q, [total_cost, order_status, memberId, itemsId], (err, data) => {
+                if (err) {
+                    console.error("Error creating order:", err);
+                    return res.status(500).json(err);
+                }
+                return res.status(200).json({
+                    message: "Order has been created",
+                    orderId: data.insertId
+                });
+            });
+        });
     });
 });
 
@@ -389,6 +419,70 @@ app.delete("/items/:item_id", (req, res) => {
         return res.status(200).json("Item deleted successfully");
     });
 });
+
+// Create new payment
+app.post("/payments", (req, res) => {
+    const { payment_type, card_number, expiration_date, cvc } = req.body;
+    
+    const q = "INSERT INTO payment (payment_type, card_number, expiration_date, cvc) VALUES (?, ?, ?, ?)";
+    
+    db.query(q, [payment_type, card_number, expiration_date, cvc], (err, result) => {
+        if (err) {
+            console.error("Error creating payment:", err);
+            return res.status(500).json(err);
+        }
+        return res.status(200).json({ paymentId: result.insertId });
+    });
+});
+
+// Create new transaction
+app.post("/transactions", (req, res) => {
+    const { transaction_status, transaction_date, total_cost, order_id, member_id, payment_id } = req.body;
+    
+    const q = `
+        INSERT INTO transaction 
+        (transaction_status, transaction_date, total_cost, order_id, member_id, payment_id) 
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    
+    db.query(q, [transaction_status, transaction_date, total_cost, order_id, member_id, payment_id], (err, result) => {
+        if (err) {
+            console.error("Error creating transaction:", err);
+            return res.status(500).json(err);
+        }
+        return res.status(200).json({ transactionId: result.insertId });
+    });
+});
+
+// fetch buyer transactions
+app.get("/transactions/buyer/:member_id", (req, res) => {
+    const memberId = req.params.member_id;
+    const q = `
+        SELECT 
+            t.transaction_id,
+            t.transaction_date,
+            t.transaction_status,
+            t.total_cost,
+            p.payment_type,
+            m.fname as seller_fname,
+            m.lname as seller_lname
+        FROM transaction t
+        JOIN orders o ON t.order_id = o.order_id
+        JOIN items i ON o.items_id = i.item_id
+        JOIN member m ON i.member_id = m.id
+        JOIN payment p ON t.payment_id = p.payment_id
+        WHERE t.member_id = ?
+        ORDER BY t.transaction_date DESC`;
+
+    db.query(q, [memberId], (err, data) => {
+        if (err) {
+            console.error("Error fetching transactions:", err);
+            return res.status(500).json(err);
+        }
+        return res.status(200).json(data);
+    });
+});
+
 
 app.listen(8800, () =>{
     console.log("Connected to backend!")

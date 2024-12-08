@@ -1,14 +1,11 @@
-// CheckoutPage.js
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './CheckoutPage.css';
 
 export const CheckoutPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const rawCartItems = location.state?.cartItems || [];
-    const memberId = localStorage.getItem("id");
 
     // Process cart items to ensure all fields have values
     const cartItems = rawCartItems.map(item => ({
@@ -27,37 +24,15 @@ export const CheckoutPage = () => {
         return sum + price;
     }, 0);
 
-    const handlePurchase = async () => {
-        try {
-            console.log("Cart Items:", cartItems);
-            console.log("Member ID:", memberId);
-            // Create orders for all items in cart
-            const orderPromises = cartItems.map(item => {
-                const orderData = {
-                    total_cost: parseFloat(item.price),
-                    order_status: "Pending",
-                    member_id: memberId,
-                    items_id: item.item_id
-                };
-                
-                // Log the order data to verify it's correct
-                console.log("Creating order with data:", orderData);
-                
-                return axios.post("http://localhost:8800/orders", orderData);
-            });
-    
-            await Promise.all(orderPromises);
-            alert("Purchase successful!");
-            navigate("/buyer-home-page");
-        } catch (error) {
-            // More detailed error logging
-            console.error("Error creating order:", error.response?.data || error.message);
-            console.error("Full error object:", error);
-            alert("There was an error processing your purchase: " + (error.response?.data || error.message));
-        }
+    // Simple navigation to payment page with cart items
+    const handlePurchase = () => {
+        navigate('/payment', { 
+            state: { 
+                cartItems: cartItems,
+                totalCost: totalCost 
+            } 
+        });
     };
-    
-    
 
     return (
         <div className="checkout-page">
@@ -105,7 +80,7 @@ export const CheckoutPage = () => {
                     <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
                 </div>
                 <button className="purchase-button" onClick={handlePurchase}>
-                    Confirm Purchase
+                    Proceed to Payment
                 </button>
             </div>
         </div>

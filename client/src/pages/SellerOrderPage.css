@@ -1,102 +1,102 @@
 .sellerorder-container {
+  display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   background-color: #c5e1ff;
+   text-align: center;
+ }
+
+ .sellerorder-page {
    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #c5e1ff;
-    text-align: center;
-  }
+   flex-direction: row; /* Horizontal layout */
+   height: 100vh;
+   background-color: #c5e1ff;
+   text-align: center;
+   gap: 20px; /* Space between the two sections */
+ }
 
-  .sellerorder-page {
-    display: flex;
-    flex-direction: row; /* Horizontal layout */
-    height: 100vh;
-    background-color: #c5e1ff;
-    text-align: center;
-    gap: 20px; /* Space between the two sections */
-  }
+ .middleman-page{
+   margin-top: 10%;
+   display: flex;
+   flex-direction: row; /* Horizontal layout */
+   height: 100vh;
+   background-color: #c5e1ff;
+   text-align: center;
+   gap: 20px; /* Space between the two sections */
+ }
 
-  .middleman-page{
-    margin-top: 10%;
-    display: flex;
-    flex-direction: row; /* Horizontal layout */
-    height: 100vh;
-    background-color: #c5e1ff;
-    text-align: center;
-    gap: 20px; /* Space between the two sections */
-  }
-
-  .ship-order{
-    border: border;
-    border-radius: 5px;
-    padding: 10px 10px;
-    background: rgb(139, 199, 139);
-    cursor: pointer;
-  }
+ .ship-order{
+   border: border;
+   border-radius: 5px;
+   padding: 10px 10px;
+   background: rgb(139, 199, 139);
+   cursor: pointer;
+ }
 
 .ship-order:hover {
-  background-color: #0056b3;
+ background-color: #0056b3;
 }
 
 .release-funds {
-  border: border;
-    border-radius: 5px;
-    padding: 10px 10px;
-    background: rgb(139, 199, 139);
-    cursor: pointer;
+ border: border;
+   border-radius: 5px;
+   padding: 10px 10px;
+   background: rgb(139, 199, 139);
+   cursor: pointer;
 }
 
 
 .active-orders-container {
-  display: flex;
-  position: absolute;
-  padding: 20px;
-  width: 50%;
-  height: 70%;
-  border-radius: 20px;  /* Make the container rounded */
-  left: 20px;
-  justify-content: flex-start;
-  flex-direction: column; /* Stack orders vertically */
-  align-items: center;
-  margin-top: 120px;
-  background-color: #5e7894;
-  overflow-y: scroll;
+ display: flex;
+ position: absolute;
+ padding: 20px;
+ width: 50%;
+ height: 70%;
+ border-radius: 20px;  /* Make the container rounded */
+ left: 20px;
+ justify-content: flex-start;
+ flex-direction: column; /* Stack orders vertically */
+ align-items: center;
+ margin-top: 120px;
+ background-color: #5e7894;
+ overflow-y: scroll;
 }
 
 .archived-orders-container {
-  position: absolute;
-  display: flex;
-  flex-direction: column; /* Stack orders vertically */
-  position: absolute;
-  padding: 20px;
-  justify-content: flex-start; /* Align content at the top */
-  width: 40%;
-  align-items: center;
-  margin-top: 120px;
-  height: 70%;
-  right: 20px;
-  border-radius: 20px; /* Make the container rounded */
-  background-color: #5e7894;
-  overflow-y: scroll;
+ position: absolute;
+ display: flex;
+ flex-direction: column; /* Stack orders vertically */
+ position: absolute;
+ padding: 20px;
+ justify-content: flex-start; /* Align content at the top */
+ width: 40%;
+ align-items: center;
+ margin-top: 120px;
+ height: 70%;
+ right: 20px;
+ border-radius: 20px; /* Make the container rounded */
+ background-color: #5e7894;
+ overflow-y: scroll;
 }
 
 .orders-heading{
-  margin: 5px 0;
-  font-size: 20px;
-  padding: 20px;
-  color: white;
+ margin: 5px 0;
+ font-size: 20px;
+ padding: 20px;
+ color: white;
 }
 
 .back-button{
-  background: #355e8a;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: semibold;
+ background: #355e8a;
+ color: white;
+ padding: 10px 20px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-radius: 5px;
+ cursor: pointer;
+ text-decoration: none;
+ font-weight: bold;
 }
