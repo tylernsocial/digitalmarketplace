@@ -129,6 +129,7 @@
 
 .order-container {
     position: absolute;
+    overflow-x: scroll;
     top: 20px;
     right: 20px;
 }

@@ -17,6 +17,16 @@
     gap: 20px; /* Space between the two sections */
   }
 
+  .middleman-page{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    height: 100vh;
+    background-color: #c5e1ff;
+    text-align: center;
+    gap: 20px; /* Space between the two sections */
+  }
+
   .ship-order{
     border: border;
     border-radius: 5px;

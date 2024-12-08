@@ -52,7 +52,7 @@ export const MiddleManPage = () => {
   return (
     <div className="sellerorder-container">
         <h1 className="sellerpage-title">Welcome to Your Portal, {memberName}!</h1>
-        <div className="sellerorder-page">
+        <div className="middleman-page">
             {orders.map((order) => (
                 <div className="order" key={order.order_id}>
                     <h3>Order ID: {order.order_id}</h3>
