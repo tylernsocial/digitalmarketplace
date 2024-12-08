@@ -91,10 +91,12 @@
 }
 
 .back-button{
+  position: absolute;
+  margin-right: 20px;
+  margin-top: 17px;
   background: #355e8a;
   color: white;
   padding: 10px 20px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
