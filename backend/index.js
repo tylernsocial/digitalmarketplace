@@ -30,15 +30,7 @@ app.get("/member", (req, res)=>{
 // Get items based on member where order_status is not 'Completed'
 app.get("/items/member", (req, res) => {
     const memberId = req.query.member_id;
-    const q = `
-            SELECT 
-            i.*, 
-            o.order_status 
-        FROM items i
-        LEFT JOIN orders o ON i.item_id = o.items_id
-        WHERE i.member_id = ? AND (o.order_status IS NULL OR o.order_status != 'Completed')
-
-    `;
+    const q = "SELECT i.*, o.order_status FROM items AS i LEFT JOIN orders AS o ON i.item_id = o.items_id WHERE (o.order_status IS NULL OR o.order_status != 'Completed')"
     db.query(q, [memberId], (err, data) => {
         if (err) {
             console.error("Error fetching items for member:", err);
@@ -65,10 +57,8 @@ app.post("/items", (req, res) => {
       return res.status(400).json({ message: "Member ID is required." });
     }
   
-    const q = `
-      INSERT INTO items 
-      (item_name, item_condition, size, description, price, item_photo, member_id) 
-      VALUES (?)`;
+    const q = "INSERT INTO items (item_name, item_condition, size, description, price, item_photo, member_id)  VALUES (?)`"
+;
   
     const values = [
       item_name,
@@ -200,26 +190,7 @@ app.post("/orders", (req, res) => {
 
 // Get order
 app.get("/orders", (req, res) => {
-    const q = `
-        SELECT 
-            o.order_id, 
-            o.cost,
-            o.order_status,
-            o.funds_released,
-            i.item_id, 
-            i.item_name, 
-            i.price,
-            i.item_photo,
-            b.fname as buyer_fname,
-            b.lname as buyer_lname,
-            s.fname as seller_fname,
-            s.lname as seller_lname
-        FROM orders o
-        JOIN items i ON o.items_id = i.item_id
-        JOIN member b ON o.member_id = b.id
-        JOIN member s ON i.member_id = s.id
-        WHERE o.archived = 0
-        ORDER BY o.order_id DESC`;
+    const q = "SELECT o.order_id, o.cost, o.order_status, o.funds_released, i.item_id, i.item_name, i.price, i.item_photo, b.fname AS buyer_fname, b.lname AS buyer_lname, s.fname AS seller_fname, s.lname AS seller_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS b ON o.member_id = b.id JOIN member AS s ON i.member_id = s.id WHERE o.archived = 0 ORDER BY o.order_id DESC"
 
     db.query(q, (err, data) => {
         if (err) return res.status(500).json(err);
@@ -230,25 +201,7 @@ app.get("/orders", (req, res) => {
 // get buyer's orders
 app.get("/orders/buyer/:member_id", (req, res) => {
     const memberId = req.params.member_id;
-    const q = `
-        SELECT 
-            o.order_id, 
-            o.cost,           
-            o.order_status,
-            i.item_id, 
-            i.item_name, 
-            i.item_photo,
-            i.price,
-            i.description,
-            i.size,
-            i.item_condition,
-            m.fname as seller_fname,
-            m.lname as seller_lname
-        FROM orders o
-        JOIN items i ON o.items_id = i.item_id
-        JOIN member m ON m.id = i.member_id
-        WHERE o.member_id = ? AND o.archived = 0
-        ORDER BY o.order_id DESC`;
+    const q = "SELECT o.order_id, o.cost, o.order_status, i.item_id, i.item_name, i.item_photo, i.price, i.description, i.size, i.item_condition, m.fname AS seller_fname, m.lname AS seller_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS m ON m.id = i.member_id WHERE o.member_id = ? AND o.archived = 0 ORDER BY o.order_id DESC"
 
     db.query(q, [memberId], (err, data) => {
         if (err) {
