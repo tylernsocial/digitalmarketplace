@@ -148,9 +148,8 @@ export const SellerOrderPage = () => {
             </div>
           ))}
         </div>
-  {/* Archived Orders */}
-  <div className="archived-orders-container">
-    <div>
+      {/* Archived Orders */}
+      <div className="archived-orders-container">
           <h2 className="orders-heading">Archived Orders</h2>
           {archivedOrders.map(order => (
             <div className="order" key={order.order_id}>
@@ -172,7 +171,6 @@ export const SellerOrderPage = () => {
           ))}
         </div>
       </div>
-    </div>
     </div>
   );
 };

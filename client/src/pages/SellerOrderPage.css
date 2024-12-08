@@ -68,16 +68,16 @@
 .archived-orders-container {
   position: absolute;
   display: flex;
-  flex-direction: column; /* Stack orders vertically */
+  flex-direction: column;
   position: absolute;
   padding: 20px;
-  justify-content: flex-start; /* Align content at the top */
+  justify-content: flex-start;
   width: 40%;
   align-items: center;
   margin-top: 120px;
   height: 70%;
   right: 20px;
-  border-radius: 20px; /* Make the container rounded */
+  border-radius: 20px;
   background-color: #5e7894;
   overflow-y: scroll;
   gap: 20px;
