@@ -146,7 +146,7 @@ export const SellerHomePage = () => {
  {/* Add Item Form */}
  <div className="sellerpage-right">
                 <h1 className="add-item-title">Add New Item</h1>
-                <form>
+                <form className=" seller-form">
                     {/* Item Name */}
                     <input
                         type="text"
