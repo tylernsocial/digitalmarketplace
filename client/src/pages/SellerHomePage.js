@@ -259,7 +259,7 @@ export const SellerHomePage = () => {
   <input
     type="radio"
     name="item_condition"
-    value="Used-Barely Worn"
+    value="Used - Barely Worn"
     checked={selectedItem.item_condition === 'Used - Barely Worn'}
     onChange={(e) => setSelectedItem({ ...selectedItem, item_condition: e.target.value })}
   />
@@ -267,7 +267,7 @@ export const SellerHomePage = () => {
   <input
     type="radio"
     name="item_condition"
-    value="Used-Old"
+    value="Used - Old"
     checked={selectedItem.item_condition === 'Used - Old'}
     onChange={(e) => setSelectedItem({ ...selectedItem, item_condition: e.target.value })}
   />

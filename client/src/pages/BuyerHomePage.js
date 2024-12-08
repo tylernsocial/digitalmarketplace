@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import './BuyerHomePage.css'; 
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import './BuyerHomePage.css';
 
 export const BuyerHomePage = () => {
     const memberId = localStorage.getItem("id");
@@ -83,10 +83,10 @@ export const BuyerHomePage = () => {
   return (
       <div className="buyerpage-container">
           <h1 className="buyerpage-title">Welcome to the Digital Marketplace!</h1>
-          <button className="back-button">
+          <div className="order-container">
+            <button className="back-button">
                 <Link to="/">Logout</Link>
             </button>
-          <div className="order-container">
             <button className="checkorders">
                 <Link to="/buyer-orders">Check Orders</Link>
             </button>

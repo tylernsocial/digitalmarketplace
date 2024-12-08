@@ -191,3 +191,16 @@
     font-size: 16px;
     color: white;
 }
+
+.back-button-home{
+    background: #355e8a;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+  }
