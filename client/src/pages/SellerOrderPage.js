@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './SellerOrderPage.css';
 import './BuyerOrderPage.css';
+import './SellerOrderPage.css';
 
 export const SellerOrderPage = () => {
   const memberId = localStorage.getItem("id");
@@ -94,9 +94,9 @@ export const SellerOrderPage = () => {
     </button>
 ) : order.order_status === "Completed" && (
   <button
-    className="delete-item"
+    className="ship-order" 
     onClick={() => handleArchive(order.order_id, order.order_status)}>
-    Delete Item
+    Archive Order
   </button>
 )}
 

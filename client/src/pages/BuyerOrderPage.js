@@ -1,6 +1,6 @@
 // BuyerOrderPage.js
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BuyerOrderPage.css';
 
@@ -76,7 +76,6 @@ export const BuyerOrderPage = () => {
     return (
         <div className="buyerorder-container">
             <h1 className="buyerpage-title">Welcome to the Buyer's Portal, {memberName}!</h1>
-    
             <div className="buyerorder-page">
                 <div className="orders-container">
                     <h2 className="section-title">Current Orders</h2>
