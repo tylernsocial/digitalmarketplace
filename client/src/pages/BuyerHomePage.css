@@ -9,13 +9,13 @@
   }
 
   .buyerpage-title {
-    font-size: 1.5rem;  /* Adjust as needed */
+    font-size: 30px;
     color: #5e7894;
-    position: absolute; /* Use absolute positioning */
-    top: 0; /* Align to the top */
-    left: 0; /* Align to the left */
-    margin: 0; /* Remove margins to avoid unintended space */
-    padding: 1rem; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    margin: 0; 
+    padding: 20px; 
 }
 
 .buyerpage-title {
@@ -129,7 +129,6 @@
 
 .order-container {
     position: absolute;
-    overflow-x: scroll;
     top: 20px;
     right: 20px;
 }

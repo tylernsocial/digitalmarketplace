@@ -137,10 +137,10 @@ app.delete("/items/:item_id", (req, res)=>{
 
 app.put("/items/:item_id", (req, res) => {
     const { item_id } = req.params;
-    const { item_name, price, description } = req.body;
+    const { item_name, price, description, size, item_photo, item_condition } = req.body;
   
-    const q = "UPDATE items SET item_name = ?, price = ?, description = ? WHERE item_id = ?";
-    db.query(q, [item_name, price, description, item_id], (err, data) => {
+    const q = "UPDATE items SET item_name = ?, item_condition = ?, size = ?, price = ?, description = ?, item_photo = ? WHERE item_id = ?";
+    db.query(q, [item_name, item_condition, size, price, description, item_photo, item_id], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json("Item updated successfully");
     });

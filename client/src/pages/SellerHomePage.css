@@ -10,13 +10,13 @@
   }
 
   .sellerpage-title {
-    font-size: 1.5rem;  /* Adjust as needed */
+    font-size: 30px;
     color: #5e7894;
-    position: absolute; /* Use absolute positioning */
-    top: 0; /* Align to the top */
-    left: 0; /* Align to the left */
-    margin: 0; /* Remove margins to avoid unintended space */
-    padding: 1rem; /* Optional, if you want some padding around the title */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    margin: 0; 
+    padding: 30px; 
 }
 
 .sellerpage-left {
@@ -25,7 +25,7 @@
     padding: 20px;
     width: 50%;
     height: 70%;
-    border-radius: 20px;  /* Make the container rounded */
+    border-radius: 20px;
     display: flex;
     left: 20px;
     margin-top: 60px;
@@ -48,12 +48,11 @@
   }
 
 .order-container{
-    font-size: 1.5rem;  /* Adjust as needed */
     color: #5e7894;
-    display: flex; /* Use absolute positioning */
-    top: 0; /* Align to the top */
-    right: 0; /* Align to the left */
-    margin: 0; /* Remove margins to avoid unintended space */
+    display: flex; 
+    top: 0; 
+    right: 0; 
+    margin: 0; 
     padding: 4rem;
     gap: 10px;
 }
@@ -82,11 +81,13 @@
 }
 
 .add {
-    border: border;
     border-radius: 5px;
-    padding: 3px 6px;
+    margin-top: 20px;
+    padding: 10px 20px;
     background: rgb(139, 199, 139);
     cursor: pointer;
+    color: white;
+    font-weight: bold;
 }
 
 .sellerpage-right {
@@ -97,7 +98,7 @@
     margin-top: 50px;
     height: 70%;
     right: 20px;
-    border-radius: 20px;  /* Make the container rounded */
+    border-radius: 20px; 
     background-color: #5e7894;
 }
 
@@ -110,14 +111,14 @@
   }
   
 .item-grid {
-  display: flex; /* Change to flexbox for row flow */
-  flex-wrap: wrap; /* Allow items to wrap onto the next row */
-  gap: 20px; /* Add space between items */
-  justify-content: flex-start; /* Align items to the left */
-  align-content: flex-start; /* Ensure items stay at the top */
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 20px; 
+  justify-content: flex-start; 
+  align-content: flex-start; 
   margin-top: 10px;
   padding: 10px;
-  width: calc(100% - 40px); /* Adjust based on your layout */
+  width: calc(100% - 40px);
 }
 
 
@@ -133,82 +134,30 @@
 
 .item-details-inline {
     display: flex;
-    justify-content: flex-start; /* Align items to the left */
-    gap: 10px; /* Adjust the spacing between price and size */
-    align-items: center; /* Align items vertically */
-    font-size: 0.9rem; /* Adjust font size */
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center; 
     color: #555;
   }
-  
-  .item-details-inline p {
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-  }
 
-  /*Adding Items*/
 .add-item-title{
-    font-size: 1.5rem;  /* Adjust as needed */
+    font-size: 25px;
     color: #ffffff;
-    position: absolute; /* Use absolute positioning */
-    top: 0; /* Align to the top */
-    left: 0; /* Align to the left */
-    margin: 0; /* Remove margins to avoid unintended space */
-    padding: 1rem; /* Optional, if you want some padding around the title */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    margin: 0;
+    padding: 20px;
 }
 
-
-/* Form Container Styling */
-.add-item-form {
-    padding: 2rem; /* Add padding around form */
-    background-color: #d2ecff; /* Light background color for form */
-    border-radius: 8px; /* Rounded corners */
-    margin-top: 40px; /* To give space between the title and form */
-    width: 100%;
-}
-
-/* Form Section Styling */
-.form-section {
-    margin-bottom: 2rem; /* Space between sections */
+.seller-form {
     display: flex;
     flex-direction: column;
-}
+    align-items: center;
+    margin-top: 5%;
+    margin-left: 20%;
+    gap: 5px;
 
-/* Section Title Styling */
-.section-title {
-    font-size: 1.25rem; /* Adjust font size for section titles */
-    font-weight: bold; /* Bold text for section titles */
-    color: #333; /* Dark text for readability */
-    margin-bottom: 0.5rem; /* Space below the section title */
-    text-align: left;
-}
-
-/* Input Field for Item Name */
-.item-name-input {
-    width: 100%; /* Full width */
-    padding: 0.8rem; /* Padding for input */
-    margin-bottom: 1rem; /* Space below the input */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 1rem; /* Font size for input */
-    box-sizing: border-box; /* Ensures padding and border are inside the width */
-}
-
-/* Radio Button Container */
-.item-condition, .size-options {
-    margin-top: 1.5rem; /* Space above the condition options */
-}
-
-/* Styling for Radio Button Labels */
-.radio-label {
-    display: block; /* Make labels block-level to stack them */
-    font-size: 1rem; /* Adjust font size */
-    margin-bottom: 1rem; /* Space below each label */
-    color: #333; /* Dark text for readability */
-}
-
-.item-condition input[type="radio"], .size-options input[type="radio"] {
-    margin-right: 0.5rem; /* Space between radio button and label text */
-    vertical-align: left; /* Align radio button with text */
 }
 
 .modal {
@@ -224,11 +173,20 @@
   }
   
   .modal-content {
-    background: white;
+    background: #5e7894;
     padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    max-width: 90%;
+    border-radius: 20px;
+    width: 600px;
+    height: 600px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+}
   
+.add-labels{
+    font-size: 16px;
+    color: white;
+}

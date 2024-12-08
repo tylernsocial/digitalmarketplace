@@ -146,8 +146,9 @@ export const SellerHomePage = () => {
  {/* Add Item Form */}
  <div className="sellerpage-right">
                 <h1 className="add-item-title">Add New Item</h1>
-                <form className=" seller-form">
+                <form className="seller-form">
                     {/* Item Name */}
+                    <h2 className= "add-labels"> Item Name:</h2>
                     <input
                         type="text"
                         name="item_name"
@@ -158,7 +159,7 @@ export const SellerHomePage = () => {
 
                     {/* Item Condition */}
                     <div>
-                        <label>Condition:</label>
+                    <h2 className= "add-labels"> Condition:</h2>
                         <div>
                             <input
                                 type="radio"
@@ -186,16 +187,18 @@ export const SellerHomePage = () => {
 
                     {/* Size */}
                     <div>
-                        <label>Size:</label>
-                        <select name="size" value={item.size} onChange={handleChange}>
-                            <option value="">Select Size</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                        </select>
+                    <h2 className= "add-labels"> Size:</h2>
+                    <input
+                        type="text"
+                        name="size"
+                        placeholder="Size (ex. S, M, L)"
+                        value={item.size}
+                        onChange={handleChange}
+                    />
                     </div>
-
                     {/* Description */}
+                    <h2 className= "add-labels"> Description:</h2>
+
                     <textarea
                         name="description"
                         placeholder="Description"
@@ -204,6 +207,8 @@ export const SellerHomePage = () => {
                     />
 
                     {/* Price */}
+                    <h2 className= "add-labels"> Price:</h2>
+
                     <input
                         type="number"
                         name="price"
@@ -213,6 +218,8 @@ export const SellerHomePage = () => {
                     />
 
                     {/* Item Photo URL */}
+                    <h2 className= "add-labels"> Item Photo:</h2>
+
                     <input
                         type="text"
                         name="item_photo"
@@ -225,11 +232,13 @@ export const SellerHomePage = () => {
                     <button className= "add" onClick={handleClick}>Add Item</button>
                 </form>
             </div>
+
              {/* Modal for modifying item */}
   {isModalOpen && selectedItem && (
     <div className="modal">
       <div className="modal-content">
-        <h2>Modify Item</h2>
+       <h2 className= "add-labels"> Modify Items</h2>
+       <h2 className= "add-labels"> Item Name:</h2>
         <input
           type="text"
           name="item_name"
@@ -237,6 +246,35 @@ export const SellerHomePage = () => {
           onChange={(e) => setSelectedItem({ ...selectedItem, item_name: e.target.value })}
           placeholder="Item Name"
         />
+      <h2 className="add-labels">Condition:</h2>
+<div>
+  <input
+    type="radio"
+    name="item_condition"
+    value="New"
+    checked={selectedItem.item_condition === 'New'}
+    onChange={(e) => setSelectedItem({ ...selectedItem, item_condition: e.target.value })}
+  />
+  <label>New</label>
+  <input
+    type="radio"
+    name="item_condition"
+    value="Used-Barely Worn"
+    checked={selectedItem.item_condition === 'Used - Barely Worn'}
+    onChange={(e) => setSelectedItem({ ...selectedItem, item_condition: e.target.value })}
+  />
+  <label>Used - Barely Worn</label>
+  <input
+    type="radio"
+    name="item_condition"
+    value="Used-Old"
+    checked={selectedItem.item_condition === 'Used - Old'}
+    onChange={(e) => setSelectedItem({ ...selectedItem, item_condition: e.target.value })}
+  />
+  <label>Used - Old</label>
+</div>
+
+        <h2 className= "add-labels"> Item Price:</h2>
         <input
           type="number"
           name="price"
@@ -244,12 +282,32 @@ export const SellerHomePage = () => {
           onChange={(e) => setSelectedItem({ ...selectedItem, price: e.target.value })}
           placeholder="Price"
         />
+        <h2 className= "add-labels"> Item Size:</h2>
+        <input
+                        type="text"
+                        name="size"
+                        value={selectedItem.size}
+                        onChange={(e) => setSelectedItem({ ...selectedItem, size: e.target.value })}
+                        placeholder="Size (ex. S, M, L)"
+                    />
+
+        <h2 className= "add-labels"> Description:</h2>
         <textarea
           name="description"
           value={selectedItem.description}
           onChange={(e) => setSelectedItem({ ...selectedItem, description: e.target.value })}
           placeholder="Description"
         />
+         <h2 className= "add-labels"> Item Photo:</h2>
+
+<input
+    type="text"
+    name="item_photo"
+    value={selectedItem.item_photo}
+    onChange={(e) => setSelectedItem({ ...selectedItem, item_photo: e.target.value })}
+    placeholder="Item Photo URL"
+/>
+
         <button onClick={handleUpdate}>Save Changes</button>
         <button onClick={() => setIsModalOpen(false)}>Cancel</button>
       </div>
