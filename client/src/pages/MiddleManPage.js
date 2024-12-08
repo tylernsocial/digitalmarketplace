@@ -4,11 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import './BuyerOrderPage.css';
 
 export const MiddleManPage = () => {
-    const memberId = localStorage.getItem("id");
-    const memberName = localStorage.getItem("name");
+    const memberId = localStorage.getItem("id"); // get member id
+    const memberName = localStorage.getItem("name"); // get member name
+
     const navigate = useNavigate();
+
     const [orders, setOrders] = useState([]);
 
+    // handle status
     const handleStatus = async (orderId, orderStatus) => {
         try {
             if (orderStatus === "Order Received") {
@@ -23,6 +26,7 @@ export const MiddleManPage = () => {
         }
     };
 
+    // get all orders
     useEffect(() => {
         const fetchOrders = async () => {
             if (!memberId) {
@@ -32,7 +36,7 @@ export const MiddleManPage = () => {
             }
 
             try {
-                const res = await axios.get(`http://localhost:8800/orders`);
+                const res = await axios.get("http://localhost:8800/orders");
                 setOrders(res.data);
             } catch (err) {
                 console.error("Error fetching orders:", err);
@@ -43,12 +47,13 @@ export const MiddleManPage = () => {
         fetchOrders();
     }, [memberId, navigate]);
 
+    // front end
     return (
         <div className="buyerorder-container">
             <button className="back-button">
                 <Link to="/">Logout</Link>
             </button>
-            
+
             <h1 className="buyerpage-title">Welcome to Your Portal, {memberName}!</h1>
 
             <div className="buyerorder-page">
@@ -67,20 +72,20 @@ export const MiddleManPage = () => {
                                     <p>Item Name: {order.item_name}</p>
                                     <p>Price: ${parseFloat(order.price).toFixed(2)}</p>
                                 </div>
-                                
+
                                 <div className="order-status">
                                     <h4>Order Status: {order.order_status}</h4>
                                     <h4>Funds Status: {order.funds_released ? 'Released' : 'Pending'}</h4>
                                     {order.item_photo && (
-                                        <img 
-                                            src={order.item_photo} 
-                                            alt={order.item_name} 
+                                        <img
+                                            src={order.item_photo}
+                                            alt={order.item_name}
                                         />
                                     )}
                                 </div>
 
                                 {order.order_status === "Order Received" && !order.funds_released && (
-                                    <button 
+                                    <button
                                         className="receive-order"
                                         onClick={() => handleStatus(order.order_id, order.order_status)}
                                     >

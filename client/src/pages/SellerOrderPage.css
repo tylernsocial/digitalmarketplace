@@ -10,21 +10,21 @@
 
   .sellerorder-page {
     display: flex;
-    flex-direction: row; /* Horizontal layout */
+    flex-direction: row; 
     height: 100vh;
     background-color: #c5e1ff;
     text-align: center;
-    gap: 20px; /* Space between the two sections */
+    gap: 20px; 
   }
 
   .middleman-page{
     margin-top: 10%;
     display: flex;
-    flex-direction: row; /* Horizontal layout */
+    flex-direction: row; 
     height: 100vh;
     background-color: #c5e1ff;
     text-align: center;
-    gap: 20px; /* Space between the two sections */
+    gap: 20px; 
   }
 
   .ship-order{
@@ -54,10 +54,10 @@
   padding: 20px;
   width: 50%;
   height: 70%;
-  border-radius: 20px;  /* Make the container rounded */
+  border-radius: 20px; 
   left: 20px;
   justify-content: flex-start;
-  flex-direction: column; /* Stack orders vertically */
+  flex-direction: column;
   align-items: center;
   margin-top: 120px;
   background-color: #5e7894;

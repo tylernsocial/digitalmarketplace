@@ -14,14 +14,14 @@ const db = mysql.createConnection({
     database: "resellStore"
 })
 
-app.get("/", (req,res)=>{
+app.get("/", (req, res) => {
     res.json("Hello this is the backend")
 })
 
 // Get all members
-app.get("/member", (req, res)=>{
+app.get("/member", (req, res) => {
     const q = "SELECT * FROM member"
-    db.query(q, (err,data)=>{
+    db.query(q, (err, data) => {
         if (err) return res.json(err)
         return res.json(data)
     })
@@ -41,9 +41,9 @@ app.get("/items/member", (req, res) => {
 });
 
 // Get all items
-app.get("/items", (req, res)=>{
+app.get("/items", (req, res) => {
     const q = "SELECT i.*, o.order_status FROM items AS i LEFT JOIN orders AS o ON i.item_id = o.items_id WHERE (o.order_status IS NULL OR o.order_status != 'Completed')"
-    db.query(q, (err,data)=>{
+    db.query(q, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });
@@ -52,31 +52,31 @@ app.get("/items", (req, res)=>{
 // Create Items
 app.post("/items", (req, res) => {
     const { item_name, item_condition, size, description, price, item_photo, member_id } = req.body;
-  
+
     // Validate that member_id is included
     if (!member_id) {
-      return res.status(400).json({ message: "Member ID is required." });
+        return res.status(400).json({ message: "Member ID is required." });
     }
-  
-    const q = "INSERT INTO items (item_name, item_condition, size, description, price, item_photo, member_id)  VALUES (?)`"
-;
-  
+
+    const q = "INSERT INTO items (item_name, item_condition, size, description, price, item_photo, member_id)  VALUES (?)";
+    ;
+
     const values = [
-      item_name,
-      item_condition,
-      size,
-      description,
-      price,
-      item_photo,
-      member_id, // member_id is passed here
+        item_name,
+        item_condition,
+        size,
+        description,
+        price,
+        item_photo,
+        member_id,
     ];
-  
+
     db.query(q, [values], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json("Item has been created");
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Item has been created");
     });
-  });
-  
+});
+
 
 // Sign-up Endpoint
 app.post("/api/signup", (req, res) => {
@@ -95,16 +95,18 @@ app.post("/api/login", (req, res) => {
     db.query(q, [email, password], (err, data) => {
         if (err) return res.status(500).json(err);
         if (data.length === 0) return res.status(401).json("Invalid email or password");
-       
+
         const user = {
-            member_id: data[0].id, // Ensure member_id is included
-            name: data[0].fname,
-            role: data[0].role, // Include role in the response
+            member_id: data[0].id, // save member id
+            name: data[0].fname, // save name
+            role: data[0].role, // save role
         };
         console.log(data); // Check what data is coming from the DB
-        return res.status(200).json({ member_id: data[0].id, name: data[0].fname, role:data[0].role});
+        return res.status(200).json({ member_id: data[0].id, name: data[0].fname, role: data[0].role });
     });
 });
+
+// Test database
 app.get("/test-db", (req, res) => {
     db.query("SELECT 1", (err, result) => {
         if (err) {
@@ -116,37 +118,37 @@ app.get("/test-db", (req, res) => {
 });
 
 // Item Delete
-app.delete("/items/:item_id", (req, res)=>{
+app.delete("/items/:item_id", (req, res) => {
     const item_id = req.params.item_id;
     const q = "DELETE FROM items WHERE item_id = ?";
 
-    db.query(q,[item_id], (err, data)=>{
+    db.query(q, [item_id], (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json("Item deleted");
     }
-);
+    );
 });
 
 // Items Update
 app.put("/items/:item_id", (req, res) => {
     const { item_id } = req.params;
     const { item_name, price, description, size, item_photo, item_condition } = req.body;
-  
+
     const q = "UPDATE items SET item_name = ?, item_condition = ?, size = ?, price = ?, description = ?, item_photo = ? WHERE item_id = ?";
     db.query(q, [item_name, item_condition, size, price, description, item_photo, item_id], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json("Item updated successfully");
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Item updated successfully");
     });
 });
 
 // Create new order
 app.post("/orders", (req, res) => {
     const { total_cost, order_status, member_id, items_id } = req.body;
-    
+
     // Convert member_id and items_id to integers
     const memberId = parseInt(member_id);
     const itemsId = parseInt(items_id);
-    
+
     // Validate required fields and types
     if (!total_cost || !order_status || !memberId || !itemsId) {
         console.error("Missing or invalid required fields:", { total_cost, order_status, memberId, itemsId });
@@ -159,7 +161,7 @@ app.post("/orders", (req, res) => {
             console.error("Error checking member:", err);
             return res.status(500).json(err);
         }
-        
+
         if (memberResult.length === 0) {
             return res.status(404).json("Member not found");
         }
@@ -170,7 +172,7 @@ app.post("/orders", (req, res) => {
                 console.error("Error checking item:", err);
                 return res.status(500).json(err);
             }
-            
+
             if (itemResult.length === 0) {
                 return res.status(404).json("Item not found");
             }
@@ -216,8 +218,8 @@ app.get("/orders/buyer/:member_id", (req, res) => {
 //  update the order status endpoint
 app.put("/orders/:order_id", (req, res) => {
     const { order_id } = req.params;
-    const { order_status, funds_released } = req.body;  
-    
+    const { order_status, funds_released } = req.body;
+
     const q = "UPDATE orders SET order_status = ?, funds_released = ? WHERE order_id = ?";
     db.query(q, [order_status, funds_released, order_id], (err, data) => {
         if (err) {
@@ -302,7 +304,7 @@ app.get("/orders/seller/archieved/:member_id", (req, res) => {
 app.delete("/orders/item/:item_id", (req, res) => {
     const itemId = req.params.item_id;
     const q = "DELETE FROM orders WHERE items_id = ?";
-    
+
     db.query(q, [itemId], (err, data) => {
         if (err) {
             console.error("Error deleting orders:", err);
@@ -331,9 +333,9 @@ app.delete("/items/:item_id", (req, res) => {
 // Create new payment
 app.post("/payments", (req, res) => {
     const { payment_type, card_number, expiration_date, cvc } = req.body;
-    
+
     const q = "INSERT INTO payment (payment_type, card_number, expiration_date, cvc) VALUES (?, ?, ?, ?)";
-    
+
     db.query(q, [payment_type, card_number, expiration_date, cvc], (err, result) => {
         if (err) {
             console.error("Error creating payment:", err);
@@ -346,9 +348,9 @@ app.post("/payments", (req, res) => {
 // Create new transaction
 app.post("/transactions", (req, res) => {
     const { transaction_status, transaction_date, total_cost, order_id, member_id, payment_id } = req.body;
-    
+
     const q = "INSERT INTO transaction (transaction_status, transaction_date, total_cost, order_id, member_id, payment_id) VALUES (?, ?, ?, ?, ?, ?)";
-    
+
     db.query(q, [transaction_status, transaction_date, total_cost, order_id, member_id, payment_id], (err, result) => {
         if (err) {
             console.error("Error creating transaction:", err);
@@ -372,7 +374,7 @@ app.get("/transactions/buyer/:member_id", (req, res) => {
     });
 });
 
-
-app.listen(8800, () =>{
+// connect to backend
+app.listen(8800, () => {
     console.log("Connected to backend!")
 })
