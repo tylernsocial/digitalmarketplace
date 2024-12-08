@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 
 export const SignUpPage = () => {
+
+  // creating a member form
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
@@ -15,6 +17,7 @@ export const SignUpPage = () => {
 
   const navigate = useNavigate();
 
+  // handle change function
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -31,22 +34,23 @@ export const SignUpPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Send form data to backend
+        body: JSON.stringify(formData), // send form data to backend
       });
 
       if (response.ok) {
         alert("Sign-up successful!");
-        navigate("/login"); // Redirect to login page after successful sign-up
+        navigate("/login"); // redirect to login page after successful sign-up
       } else {
-        const errorData = await response.json(); // Extract error details from backend response
+        const errorData = await response.json(); // extract error details from backend response
         alert(`Error: ${errorData.message || "Sign-up failed. Please try again."}`);
     }
   } catch (error) {
-      console.error("Error:", error); // Log the full error object for debugging
+      console.error("Error:", error); // log the full error object for debugging
       alert(`Error: ${error.message || "An unknown error occurred. Please check the console for more details."}`);
   }
 };
 
+  // front end
   return (
     <div className="signup-page">
       <h1>Sign Up</h1>
@@ -119,17 +123,6 @@ export const SignUpPage = () => {
               onChange={handleChange}
             />
             Seller
-          </label>
-          {/* for testing, delete later */}
-          <label>
-            <input
-              type="radio"
-              name="role"
-              value="middleman"
-              checked={formData.role === "middleman"}
-              onChange={handleChange}
-            />
-            middleman
           </label>
         </div>
 

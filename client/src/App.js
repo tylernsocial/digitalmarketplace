@@ -1,16 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { BuyerHomePage } from "./pages/BuyerHomePage";
+import { BuyerOrderPage } from './pages/BuyerOrderPage';
+import { CheckoutPage } from './pages/CheckoutPage';
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { MiddleManPage } from "./pages/MiddleManPage";
+import { PaymentPage } from './pages/PaymentPage';
 import { SellerHomePage } from "./pages/SellerHomePage";
 import { SellerOrderPage } from "./pages/SellerOrderPage";
 import { SignUpPage } from "./pages/SignUpPage";
-import { CheckoutPage } from './pages/CheckoutPage';
-import { BuyerOrderPage } from './pages/BuyerOrderPage';
-import { PaymentPage } from './pages/PaymentPage';
 
-
+// routing all pages
 function App() {
   return (
     <div className="App">
