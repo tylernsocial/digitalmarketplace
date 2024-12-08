@@ -8,6 +8,8 @@ import { SellerOrderPage } from "./pages/SellerOrderPage";
 import { SignUpPage } from "./pages/SignUpPage";
 import { CheckoutPage } from './pages/CheckoutPage';
 import { BuyerOrderPage } from './pages/BuyerOrderPage';
+import { PaymentPage } from './pages/PaymentPage';
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
           <Route path="middleman-page" element={<MiddleManPage/>}/>
           <Route path="/checkout-page" element={<CheckoutPage />} />
           <Route path="/buyer-orders" element={<BuyerOrderPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes>
       </BrowserRouter>
     </div>
