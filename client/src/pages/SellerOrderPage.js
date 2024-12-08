@@ -13,7 +13,7 @@ export const SellerOrderPage = () => {
   const [orders, setOrders] = useState([]);
   const [archivedOrders, setArchivedOrders] = useState([]);
 
-  const [order, addOrder] = useState({});
+  const [order] = useState({});
 
   // handle archive function
   const handleArchive = async (orderId, orderStatus) => {
