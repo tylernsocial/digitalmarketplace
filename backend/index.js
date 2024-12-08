@@ -30,7 +30,11 @@ app.get("/member", (req, res)=>{
 // Get items based on member where order_status is not 'Completed'
 app.get("/items/member", (req, res) => {
     const memberId = req.query.member_id;
+<<<<<<< Updated upstream
     const q = "SELECT i.*, o.order_status FROM items AS i LEFT JOIN orders AS o ON i.item_id = o.items_id WHERE (o.order_status IS NULL OR o.order_status != 'Completed')"
+=======
+    const q = "SELECT i.*, o.order_status FROM items AS i LEFT JOIN orders AS o ON i.item_id = o.items_id WHERE i.member_id = ? AND (o.order_status IS NULL OR o.order_status != 'Completed')"
+>>>>>>> Stashed changes
     db.query(q, [memberId], (err, data) => {
         if (err) {
             console.error("Error fetching items for member:", err);
@@ -49,6 +53,7 @@ app.get("/items", (req, res)=>{
     });
 });
 
+// Create Items
 app.post("/items", (req, res) => {
     const { item_name, item_condition, size, description, price, item_photo, member_id } = req.body;
   
@@ -114,6 +119,7 @@ app.get("/test-db", (req, res) => {
     });
 });
 
+// Item Delete
 app.delete("/items/:item_id", (req, res)=>{
     const item_id = req.params.item_id;
     const q = "DELETE FROM items WHERE item_id = ?";
@@ -125,6 +131,7 @@ app.delete("/items/:item_id", (req, res)=>{
 );
 });
 
+// Items Update
 app.put("/items/:item_id", (req, res) => {
     const { item_id } = req.params;
     const { item_name, price, description, size, item_photo, item_condition } = req.body;
@@ -190,8 +197,12 @@ app.post("/orders", (req, res) => {
 
 // Get order
 app.get("/orders", (req, res) => {
+<<<<<<< Updated upstream
     const q = "SELECT o.order_id, o.cost, o.order_status, o.funds_released, i.item_id, i.item_name, i.price, i.item_photo, b.fname AS buyer_fname, b.lname AS buyer_lname, s.fname AS seller_fname, s.lname AS seller_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS b ON o.member_id = b.id JOIN member AS s ON i.member_id = s.id WHERE o.archived = 0 ORDER BY o.order_id DESC"
 
+=======
+    const q = "SELECT o.order_id, o.cost, o.order_status, o.funds_released, i.item_id, i.item_name, i.price, i.item_photo, b.fname AS buyer_fname, b.lname AS buyer_lname, s.fname AS seller_fname, s.lname AS seller_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS b ON o.member_id = b.id JOIN member AS s ON i.member_id = s.id WHERE o.archived = 0 ORDER BY o.order_id DESC";
+>>>>>>> Stashed changes
     db.query(q, (err, data) => {
         if (err) return res.status(500).json(err);
         return res.status(200).json(data);
@@ -201,8 +212,12 @@ app.get("/orders", (req, res) => {
 // get buyer's orders
 app.get("/orders/buyer/:member_id", (req, res) => {
     const memberId = req.params.member_id;
+<<<<<<< Updated upstream
     const q = "SELECT o.order_id, o.cost, o.order_status, i.item_id, i.item_name, i.item_photo, i.price, i.description, i.size, i.item_condition, m.fname AS seller_fname, m.lname AS seller_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS m ON m.id = i.member_id WHERE o.member_id = ? AND o.archived = 0 ORDER BY o.order_id DESC"
 
+=======
+    const q = "SELECT o.order_id, o.cost, o.order_status, i.item_id, i.item_name, i.item_photo, i.price, i.description, i.size, i.item_condition, m.fname AS seller_fname, m.lname AS seller_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS m ON m.id = i.member_id WHERE o.member_id = ? AND o.archived = 0 ORDER BY o.order_id DESC";
+>>>>>>> Stashed changes
     db.query(q, [memberId], (err, data) => {
         if (err) {
             console.error("Error fetching buyer orders:", err);
@@ -227,10 +242,9 @@ app.put("/orders/:order_id", (req, res) => {
     });
 });
 
+// set order archive
 app.put("/orders/archive/:order_id", (req, res) => {
     const { order_id } = req.params;
-    console.log(`Archiving order with ID: ${order_id}`); // Debugging
-
 
     const q = "UPDATE orders SET archived = '1' WHERE order_id = ?";
     db.query(q, [order_id], (err, data) => {
@@ -245,25 +259,7 @@ app.put("/orders/archive/:order_id", (req, res) => {
 // for seller's orders
 app.get("/orders/seller/:member_id", (req, res) => {
     const sellerId = req.params.member_id;
-    const q = `
-        SELECT 
-            o.order_id, 
-            o.cost,
-            o.order_status,
-            i.item_id, 
-            i.item_name, 
-            i.item_photo,
-            i.price,
-            i.description,
-            i.size,
-            i.item_condition,
-            m.fname as buyer_fname,
-            m.lname as buyer_lname
-        FROM orders o
-        JOIN items i ON o.items_id = i.item_id
-        JOIN member m ON m.id = o.member_id
-        WHERE i.member_id = ? AND o.archived = 0
-        ORDER BY o.order_id DESC`;
+    const q = "SELECT o.*, i.*, m.fname as buyer_fname, m.lname as buyer_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS m ON m.id = o.member_id WHERE i.member_id = ? AND o.archived = 0 ORDER BY o.order_id DESC";
 
     db.query(q, [sellerId], (err, data) => {
         if (err) {
@@ -277,13 +273,7 @@ app.get("/orders/seller/:member_id", (req, res) => {
 // for calculating total profits
 app.get("/profits/seller/:seller_id", (req, res) => {
     const sellerId = req.params.seller_id;
-    const q = `
-        SELECT COALESCE(SUM(o.cost), 0) as total
-        FROM orders o
-        JOIN items i ON o.items_id = i.item_id
-        WHERE i.member_id = ? 
-        AND o.order_status = 'Completed'
-        AND o.funds_released = TRUE`;
+    const q = "SELECT COALESCE(SUM(o.cost), 0) as total FROM orders AS o JOIN items AS i ON o.items_id = i.item_id WHERE i.member_id = ? AND o.order_status = 'Completed' AND o.funds_released = TRUE";
     db.query(q, [sellerId], (err, data) => {
         if (err) {
             console.error("Error fetching profits:", err);
@@ -293,14 +283,10 @@ app.get("/profits/seller/:seller_id", (req, res) => {
     });
 });
 
-// Add this test endpoint
+// get seller orders
 app.get("/check-orders/:seller_id", (req, res) => {
     const sellerId = req.params.seller_id;
-    const q = `
-        SELECT o.*, i.member_id as seller_id 
-        FROM orders o
-        JOIN items i ON o.items_id = i.item_id
-        WHERE i.member_id = ?`;
+    const q = "SELECT o.*, i.member_id as seller_id FROM orders AS o JOIN items AS i ON o.items_id = i.item_id WHERE i.member_id = ?";
 
     db.query(q, [sellerId], (err, data) => {
         if (err) {
@@ -315,25 +301,7 @@ app.get("/check-orders/:seller_id", (req, res) => {
 // for seller's orders archived
 app.get("/orders/seller/archieved/:member_id", (req, res) => {
     const sellerId = req.params.member_id;
-    const q = `
-        SELECT 
-            o.order_id, 
-            o.cost,
-            o.order_status,
-            i.item_id, 
-            i.item_name, 
-            i.item_photo,
-            i.price,
-            i.description,
-            i.size,
-            i.item_condition,
-            m.fname as buyer_fname,
-            m.lname as buyer_lname
-        FROM orders o
-        JOIN items i ON o.items_id = i.item_id
-        JOIN member m ON m.id = o.member_id
-        WHERE i.member_id = ? AND o.archived = 1
-        ORDER BY o.order_id DESC`;
+    const q = "SELECT o.*, i.*, m.fname as buyer_fname, m.lname as buyer_lname FROM orders AS o JOIN items AS i ON o.items_id = i.item_id JOIN member AS m ON m.id = o.member_id WHERE i.member_id = ? AND o.archived = 1 ORDER BY o.order_id DESC";
 
     db.query(q, [sellerId], (err, data) => {
         if (err) {
@@ -343,6 +311,7 @@ app.get("/orders/seller/archieved/:member_id", (req, res) => {
         return res.status(200).json(data);
     });
 });
+
 // Delete all orders related to an item
 app.delete("/orders/item/:item_id", (req, res) => {
     const itemId = req.params.item_id;
@@ -357,7 +326,7 @@ app.delete("/orders/item/:item_id", (req, res) => {
     });
 });
 
-// items
+// delete items
 app.delete("/items/:item_id", (req, res) => {
     const itemId = req.params.item_id;
     console.log(`Deleting item with ID: ${itemId}`); // Debugging log
@@ -392,11 +361,7 @@ app.post("/payments", (req, res) => {
 app.post("/transactions", (req, res) => {
     const { transaction_status, transaction_date, total_cost, order_id, member_id, payment_id } = req.body;
     
-    const q = `
-        INSERT INTO transaction 
-        (transaction_status, transaction_date, total_cost, order_id, member_id, payment_id) 
-        VALUES (?, ?, ?, ?, ?, ?)
-    `;
+    const q = "INSERT INTO transaction (transaction_status, transaction_date, total_cost, order_id, member_id, payment_id) VALUES (?, ?, ?, ?, ?, ?)";
     
     db.query(q, [transaction_status, transaction_date, total_cost, order_id, member_id, payment_id], (err, result) => {
         if (err) {
@@ -410,22 +375,7 @@ app.post("/transactions", (req, res) => {
 // fetch buyer transactions
 app.get("/transactions/buyer/:member_id", (req, res) => {
     const memberId = req.params.member_id;
-    const q = `
-        SELECT 
-            t.transaction_id,
-            t.transaction_date,
-            t.transaction_status,
-            t.total_cost,
-            p.payment_type,
-            m.fname as seller_fname,
-            m.lname as seller_lname
-        FROM transaction t
-        JOIN orders o ON t.order_id = o.order_id
-        JOIN items i ON o.items_id = i.item_id
-        JOIN member m ON i.member_id = m.id
-        JOIN payment p ON t.payment_id = p.payment_id
-        WHERE t.member_id = ?
-        ORDER BY t.transaction_date DESC`;
+    const q = "SELECT t.*, p.payment_type, m.fname as seller_fname, m.lname as seller_lname FROM transaction AS t JOIN orders AS o ON t.order_id = o.order_id JOIN items AS i ON o.items_id = i.item_id JOIN member AS m ON i.member_id = m.id JOIN payment AS p ON t.payment_id = p.payment_id WHERE t.member_id = ? ORDER BY t.transaction_date DESC";
 
     db.query(q, [memberId], (err, data) => {
         if (err) {
