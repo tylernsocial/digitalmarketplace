@@ -1,6 +1,7 @@
 # **Digital Marketplace**
 
-A project for **CPSC 471** focused on creating an interface for used clothing items to be sold by resellers and bought by buyers, looked over by a middleman.
+A project for **CPSC 471** focused on creating an interface for used clothing items to be sold by resellers and bought by buyers, looked over by a middleman. 
+Please refer to the diagrams_and_user_manual.pdf for a step-by-step walkthrough of how the project works, including the system architecture, data flow diagrams, and a usage demonstration. This document provides both the technical overview and a user-friendly guide to replicate the demo.
 ---
 
 ## **Group Members: Group 26**
